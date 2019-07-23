@@ -27,3 +27,6 @@ $string['pluginname'] = 'Manual Decide Step';
 $string['emailsubject'] = 'Lifecycle: There are new courses waiting for confirmation.';
 $string['emailcontent'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit {$a->url}.';
 $string['emailcontenthtml'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit <a href="{$a->url}">this link</a>.';
+$string['courseid'] = 'Course id';
+$string['markedas'] = 'Marked as';
+$string['workflow'] = 'Workflow';

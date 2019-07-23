@@ -25,5 +25,5 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version  = 2019072300;
+$plugin->version  = 2019072301;
 $plugin->component = 'lifecyclestep_manualdecide';
