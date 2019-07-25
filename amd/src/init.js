@@ -1,4 +1,3 @@
-<?php
 // This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
@@ -15,7 +14,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Lang Strings for Admin Approve Step
+ * Life Cycle Admin Approve Step AMD Module
  *
  * @package tool_lifecycle_step
  * @subpackage adminapprove
@@ -23,13 +22,15 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Admin Approve Step';
-$string['emailsubject'] = 'Lifecycle: There are new courses waiting for confirmation.';
-$string['emailcontent'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit {$a->url}.';
-$string['emailcontenthtml'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit <a href="{$a->url}">this link</a>.';
-$string['courseid'] = 'Course id';
-$string['markedas'] = 'Marked as';
-$string['workflow'] = 'Workflow';
-$string['proceedselected'] = 'Proceed selected';
-$string['rollbackselected'] = 'Rollback selected';
-$string['tools'] = 'Tools';
+/**
+ * @module lifecyclestep_adminapprove/init
+ */
+define(['jquery'], function($) {
+    return {
+        init: function() {
+            $('input[name="checkall"]').click(function() {
+                $('input[name="c"]').prop('checked', $('input[name="checkall"]').prop('checked'));
+            });
+        }
+    };
+});

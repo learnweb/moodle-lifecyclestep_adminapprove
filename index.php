@@ -53,8 +53,9 @@ echo '</form>';
 
 echo 'Bulk actions:<br>';
 echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-proceed">' . get_string('proceedselected', 'lifecyclestep_adminapprove') . '</div>';
-echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-rollback">' . get_string('rollback_selected', 'lifecyclestep_adminapprove') . '</div>';
+echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-rollback">' . get_string('rollbackselected', 'lifecyclestep_adminapprove') . '</div>';
 
+$PAGE->requires->js_call_amd('lifecyclestep_adminapprove/init', 'init');
 
 $PAGE->requires->js_amd_inline("
 require([], function() {

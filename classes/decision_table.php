@@ -35,33 +35,24 @@ class decision_table extends \table_sql {
     public function __construct() {
         parent::__construct('lifecyclestep_adminapprove-table');
         $this->define_baseurl(new \moodle_url('/admin/tool/lifecycle/step/adminapprove/index.php'));
-        $this->define_columns(['checkbox', 'courseid', 'course', 'status', 'tools']);
+        $this->define_columns(['checkbox', 'courseid', 'course', 'tools']);
         $this->define_headers(
-            array('', get_string('courseid', 'lifecyclestep_adminapprove'), get_string('course'),
-            get_string('markedas', 'lifecyclestep_adminapprove'), 'Tools'
-            ));
+            array(\html_writer::checkbox('checkall', null, false), get_string('courseid', 'lifecyclestep_adminapprove'), get_string('course'),
+            get_string('tools', 'lifecyclestep_adminapprove')));
+        $this->column_nosort = array('checkbox', 'tools');
         $fields = 'm.id, w.displaytitle as workflow, c.id as courseid, c.fullname as course, m.status';
         $from = '{lifecyclestep_adminapprove} m ' .
             'LEFT JOIN {tool_lifecycle_process} p ON p.id = m.processid ' .
             'LEFT JOIN {course} c ON c.id = p.courseid ' .
             'LEFT JOIN {tool_lifecycle_workflow} w ON w.id = p.workflowid ' .
             'LEFT JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex';
-        $this->set_sql($fields, $from, 'TRUE');
+        $where = 'm.status = 0';
+        $this->set_sql($fields, $from, $where);
+
     }
 
     public function col_checkbox($row) {
         return \html_writer::checkbox('c', $row->courseid, false);
-    }
-
-    public function col_status($row) {
-        switch ($row->status) {
-            case 1:
-                return 'Proceed';
-            case 2:
-                return 'Rollback';
-            default:
-                return 'Waiting';
-        }
     }
 
     public function col_tools($row) {
