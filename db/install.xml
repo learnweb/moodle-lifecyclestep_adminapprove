@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<XMLDB PATH="admin/tool/lifecycle/step/manualdecide/db" VERSION="20190723" COMMENT="XLMDB File for lifecyclestep_manualdecide"
+<XMLDB PATH="admin/tool/lifecycle/step/adminapprove/db" VERSION="20190723" COMMENT="XLMDB File for lifecyclestep_adminapprove"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="../../../../../../lib/xmldb/xmldb.xsd"
 >
   <TABLES>
-    <TABLE NAME="lifecyclestep_manualdecide" COMMENT="Stores courses which have to get a manual confirmation for proceeding">
+    <TABLE NAME="lifecyclestep_adminapprove" COMMENT="Stores courses which have to get a manual confirmation for proceeding">
       <FIELDS>
         <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true"/>
         <FIELD NAME="processid" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="false"/>

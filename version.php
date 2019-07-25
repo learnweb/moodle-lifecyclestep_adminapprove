@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Life Cycle Manual Decide Step
+ * Life Cycle Admin Approve Step
  *
  * @package tool_lifecycle_step
- * @subpackage manualdecide
+ * @subpackage adminapprove
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -26,4 +26,4 @@
 defined('MOODLE_INTERNAL') || die;
 
 $plugin->version  = 2019072301;
-$plugin->component = 'lifecyclestep_manualdecide';
+$plugin->component = 'lifecyclestep_adminapprove';

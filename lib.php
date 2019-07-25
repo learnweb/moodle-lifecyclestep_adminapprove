@@ -15,10 +15,10 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * lib for Manual Decide Step
+ * lib for Admin Approve Step
  *
  * @package tool_lifecycle_step
- * @subpackage manualdecide
+ * @subpackage adminapprove
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -33,7 +33,7 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../lib.php');
 
-class manualdecide extends libbase {
+class adminapprove extends libbase {
 
     private $newcourses = 0;
 
@@ -48,7 +48,7 @@ class manualdecide extends libbase {
         $record = new \stdClass();
         $record->processid = $processid;
         $record->status = 0;
-        $DB->insert_record('lifecyclestep_manualdecide', $record);
+        $DB->insert_record('lifecyclestep_adminapprove', $record);
         $this->newcourses++;
         return step_response::waiting();
     }
@@ -58,18 +58,18 @@ class manualdecide extends libbase {
     }
 
     public function get_subpluginname() {
-        return 'manualdecide';
+        return 'adminapprove';
     }
 
     public function process_waiting_course($processid, $instanceid, $course) {
         global $DB;
-        $record = $DB->get_record('lifecyclestep_manualdecide', array('processid' => $processid));
+        $record = $DB->get_record('lifecyclestep_adminapprove', array('processid' => $processid));
         switch ($record->status) {
             case 1:
-                $DB->delete_records('lifecyclestep_manualdecide', array('processid' => $processid));
+                $DB->delete_records('lifecyclestep_adminapprove', array('processid' => $processid));
                 return step_response::proceed();
             case 2:
-                $DB->delete_records('lifecyclestep_manualdecide', array('processid' => $processid));
+                $DB->delete_records('lifecyclestep_adminapprove', array('processid' => $processid));
                 return step_response::rollback();
             default:
                 return step_response::waiting();
@@ -85,12 +85,12 @@ class manualdecide extends libbase {
         if ($this->newcourses > 0) {
             $obj = new \stdClass();
             $obj->amount = $this->newcourses;
-            $obj->link = $CFG->wwwroot . '/admin/tool/lifecycle/step/manualdecide/index.php';
+            $obj->link = $CFG->wwwroot . '/admin/tool/lifecycle/step/adminapprove/index.php';
 
             email_to_user(get_admin(), \core_user::get_noreply_user(),
-                get_string('emailsubject', 'lifecyclestep_manualdecide'),
-                get_string('emailcontent', 'lifecyclestep_manualdecide',  $obj),
-                get_string('emailcontenthtml', 'lifecyclestep_manualdecide', $obj));
+                get_string('emailsubject', 'lifecyclestep_adminapprove'),
+                get_string('emailcontent', 'lifecyclestep_adminapprove',  $obj),
+                get_string('emailcontenthtml', 'lifecyclestep_adminapprove', $obj));
         }
     }
 }

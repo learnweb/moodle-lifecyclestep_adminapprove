@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Lang Strings for Manual Decide Step
+ * Lang Strings for Admin Approve Step
  *
  * @package tool_lifecycle_step
- * @subpackage manualdecide
+ * @subpackage adminapprove
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Manual Decide Step';
+$string['pluginname'] = 'Admin Approve Step';
 $string['emailsubject'] = 'Lifecycle: There are new courses waiting for confirmation.';
 $string['emailcontent'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit {$a->url}.';
 $string['emailcontenthtml'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit <a href="{$a->url}">this link</a>.';

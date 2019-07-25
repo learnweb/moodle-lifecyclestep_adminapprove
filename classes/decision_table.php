@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Life Cycle Manual Decide Step
+ * Life Cycle Admin Approve Step
  *
  * @package tool_lifecycle_step
- * @subpackage manualdecide
+ * @subpackage adminapprove
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-namespace lifecyclestep_manualdecide;
+namespace lifecyclestep_adminapprove;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -33,15 +33,15 @@ require_once $CFG->libdir . '/tablelib.php';
 class decision_table extends \table_sql {
 
     public function __construct() {
-        parent::__construct('lifecyclestep_manualdecide-table');
-        $this->define_baseurl(new \moodle_url('/admin/tool/lifecycle/step/manualdecide/index.php'));
+        parent::__construct('lifecyclestep_adminapprove-table');
+        $this->define_baseurl(new \moodle_url('/admin/tool/lifecycle/step/adminapprove/index.php'));
         $this->define_columns(['checkbox', 'courseid', 'course', 'status', 'tools']);
         $this->define_headers(
-            array('', get_string('courseid', 'lifecyclestep_manualdecide'), get_string('course'),
-            get_string('markedas', 'lifecyclestep_manualdecide'), 'Tools'
+            array('', get_string('courseid', 'lifecyclestep_adminapprove'), get_string('course'),
+            get_string('markedas', 'lifecyclestep_adminapprove'), 'Tools'
             ));
         $fields = 'm.id, w.displaytitle as workflow, c.id as courseid, c.fullname as course, m.status';
-        $from = '{lifecyclestep_manualdecide} m ' .
+        $from = '{lifecyclestep_adminapprove} m ' .
             'LEFT JOIN {tool_lifecycle_process} p ON p.id = m.processid ' .
             'LEFT JOIN {course} c ON c.id = p.courseid ' .
             'LEFT JOIN {tool_lifecycle_workflow} w ON w.id = p.workflowid ' .
