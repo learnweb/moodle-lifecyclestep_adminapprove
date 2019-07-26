@@ -33,3 +33,5 @@ $string['workflow'] = 'Workflow';
 $string['proceedselected'] = 'Proceed selected';
 $string['rollbackselected'] = 'Rollback selected';
 $string['tools'] = 'Tools';
+$string['courses_waiting'] = 'These courses are currently waiting for approval in the "{$a->step}" Step in the "{$a->workflow}" Workflow.';
+$string['no_courses_waiting'] = 'There are currently no courses waiting for approval in the "{$a->step}" Step in the "{$a->workflow}" Workflow.';

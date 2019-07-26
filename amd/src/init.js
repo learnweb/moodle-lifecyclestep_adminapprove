@@ -29,7 +29,7 @@ define(['jquery'], function($) {
     return {
         init: function() {
             $('input[name="checkall"]').click(function() {
-                $('input[name="c"]').prop('checked', $('input[name="checkall"]').prop('checked'));
+                $('input[name="c[]"]').prop('checked', $('input[name="checkall"]').prop('checked'));
             });
 
             $('#adminapprove-bulk-proceed').click(function() {
