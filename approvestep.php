@@ -60,7 +60,7 @@ echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 $hasrecords = $DB->record_exists_sql('SELECT a.id FROM {lifecyclestep_adminapprove} a ' .
     'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
     'JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex ' .
-    'WHERE s.id = :sid', array('sid' => $stepid));
+    'WHERE s.id = :sid AND a.status = 0', array('sid' => $stepid));
 
 if ($hasrecords) {
     echo get_string('courses_waiting', 'lifecyclestep_adminapprove',

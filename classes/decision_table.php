@@ -57,8 +57,8 @@ class decision_table extends \table_sql {
 
     public function col_tools($row) {
         global $OUTPUT;
-        $button1 = new \single_button(new \moodle_url($this->baseurl, array('act'=>'proceed', 'c[]' => $row->id)), 'Proceed');
-        $button2 = new \single_button(new \moodle_url($this->baseurl, array('act'=>'rollback', 'c[]' => $row->id)), 'Rollback');
+        $button1 = new \single_button(new \moodle_url($this->baseurl, array('act'=>'proceed', 'c[]' => $row->id)), get_string('proceed', 'lifecyclestep_adminapprove'));
+        $button2 = new \single_button(new \moodle_url($this->baseurl, array('act'=>'rollback', 'c[]' => $row->id)), get_string('rollback', 'lifecyclestep_adminapprove'));
         return $OUTPUT->render($button1) . $OUTPUT->render($button2);
     }
 
