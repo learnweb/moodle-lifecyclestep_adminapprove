@@ -34,11 +34,20 @@ $PAGE->set_url(new \moodle_url('/admin/tool/lifecycle/step/adminapprove/index.ph
 require_capability('moodle/site:config', context_system::instance());
 
 $action = optional_param('act', null, PARAM_ALPHA);
-$courses = optional_param_array('c', array(), PARAM_INT);
+$ids = optional_param_array('c', array(), PARAM_INT);
+$wid = required_param('wid', PARAM_INT);
 
-echo '<br><br><br>';
-var_dump($action);
-var_dump($courses);
+$workflow = \tool_lifecycle\manager\workflow_manager::get_workflow($wid);
+if (!$workflow) {
+    throw new moodle_exception('Workflowid does not correspond to any workflow.');
+}
+
+if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
+    $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
+        'SET status = ' . ($action == 'proceed' ? 1 : 2) .
+        'WHERE id IN (' . implode(',', $ids) . ') ';
+        $DB->execute($sql, array('wid' => $wid));
+}
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
@@ -46,7 +55,7 @@ echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 echo 'These courses are currently waiting in the "Make Decision #1" Step in the "WF#1" Workflow.<br>';
 echo '<form action="" method="post" id="adminapprove-action-form"><input type="hidden" name="act" id="act" value="">';
 
-$table = new lifecyclestep_adminapprove\decision_table();
+$table = new lifecyclestep_adminapprove\decision_table($wid);
 $table->out(30, false);
 
 echo '</form>';
@@ -56,14 +65,5 @@ echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-proceed">' . get_
 echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-rollback">' . get_string('rollbackselected', 'lifecyclestep_adminapprove') . '</div>';
 
 $PAGE->requires->js_call_amd('lifecyclestep_adminapprove/init', 'init');
-
-$PAGE->requires->js_amd_inline("
-require([], function() {
-           $('#adminapprove-bulk-proceed').click(function() {
-             $('#act').get(0).value = 'proceed';
-             $('#adminapprove-action-form').submit();
-           });
-});
-");
 
 echo $OUTPUT->footer();

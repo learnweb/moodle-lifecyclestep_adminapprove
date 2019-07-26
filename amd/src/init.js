@@ -31,6 +31,16 @@ define(['jquery'], function($) {
             $('input[name="checkall"]').click(function() {
                 $('input[name="c"]').prop('checked', $('input[name="checkall"]').prop('checked'));
             });
+
+            $('#adminapprove-bulk-proceed').click(function() {
+                $('#act').get(0).value = 'proceed';
+                $('#adminapprove-action-form').submit();
+            });
+
+            $('#adminapprove-bulk-rollback').click(function() {
+                $('#act').get(0).value = 'rollback';
+                $('#adminapprove-action-form').submit();
+            });
         }
     };
 });
