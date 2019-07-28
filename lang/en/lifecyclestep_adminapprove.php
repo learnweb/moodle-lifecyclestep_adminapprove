@@ -37,3 +37,4 @@ $string['courses_waiting'] = 'These courses are currently waiting for approval i
 $string['no_courses_waiting'] = 'There are currently no courses waiting for approval in the "{$a->step}" Step in the "{$a->workflow}" Workflow.';
 $string['proceed'] = 'Proceed';
 $string['rollback'] = 'Rollback';
+$string['amount_courses'] = 'Remaining waiting courses';

@@ -54,6 +54,8 @@ if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
     $DB->execute($sql);
 }
 
+$mform = new \lifecyclestep_adminapprove\course_filter_form($PAGE->url->out());
+
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
@@ -63,6 +65,8 @@ $hasrecords = $DB->record_exists_sql('SELECT a.id FROM {lifecyclestep_adminappro
     'WHERE s.id = :sid AND a.status = 0', array('sid' => $stepid));
 
 if ($hasrecords) {
+    $mform->display();
+
     echo get_string('courses_waiting', 'lifecyclestep_adminapprove',
         array('step' => $step->instancename, 'workflow' => $workflow->title));
     echo '<form action="" method="post" id="adminapprove-action-form"><input type="hidden" name="act" id="act" value="">';
