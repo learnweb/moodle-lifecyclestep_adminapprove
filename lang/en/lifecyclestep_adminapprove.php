@@ -38,3 +38,5 @@ $string['no_courses_waiting'] = 'There are currently no courses waiting for appr
 $string['proceed'] = 'Proceed';
 $string['rollback'] = 'Rollback';
 $string['amount_courses'] = 'Remaining waiting courses';
+$string['only_number'] = 'Only numeric characters allowed!';
+$string['nothingtodisplay'] = 'There are no courses waiting for approval matching your current filters.';

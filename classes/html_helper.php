@@ -27,24 +27,22 @@ namespace lifecyclestep_adminapprove;
 
 defined('MOODLE_INTERNAL') || die();
 
-global $CFG;
-require_once $CFG->libdir . '/formslib.php';
+class html_helper {
 
-class course_filter_form extends \moodleform {
+    public static function render_button($url, $params, $submit) {
+        $output = "<div class='singlebutton'><form action='$url' method='post'>";
+        $output .= self::render_hidden_input($params);
+        $output .= $submit;
+        $output .= "</form></div>";
+        return $output;
+    }
 
-    protected function definition() {
-        $mform = $this->_form;
-        $mform->addElement('text', 'courseid', get_string('courseid', 'lifecyclestep_adminapprove'));
-        $mform->setType('courseid', PARAM_ALPHANUM);
-        $mform->addRule('courseid', get_string('only_number', 'lifecyclestep_adminapprove'), 'numeric', null, 'client');
-
-        $mform->addElement('text', 'coursename', get_string('course'));
-        $mform->setType('coursename', PARAM_NOTAGS);
-
-        $buttonarray = [
-            $mform->createElement('submit', 'submitbutton', get_string('filter')),
-            $mform->createElement('cancel'),
-        ];
-        $mform->addGroup($buttonarray, 'buttonar', '', [' '], false);
+    public static function render_hidden_input($params) {
+        $output = '';
+        foreach ($params as $key => $value) {
+            $attributes = array('type' => 'hidden', 'name' => $key, 'value' => $value);
+            $output .= \html_writer::empty_tag('input', $attributes) . "\n";
+        }
+        return $output;
     }
 }

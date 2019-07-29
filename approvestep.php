@@ -49,41 +49,60 @@ $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/approves
 
 if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
     $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
-        'SET status = ' . ($action == 'proceed' ? 1 : 2) .
-        'WHERE id IN (' . implode(',', $ids) . ') ';
+            'SET status = ' . ($action == 'proceed' ? 1 : 2) .
+            'WHERE id IN (' . implode(',', $ids) . ') ';
     $DB->execute($sql);
 }
 
 $mform = new \lifecyclestep_adminapprove\course_filter_form($PAGE->url->out());
+if ($mform->is_cancelled()) {
+    redirect($PAGE->url);
+}
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
 $hasrecords = $DB->record_exists_sql('SELECT a.id FROM {lifecyclestep_adminapprove} a ' .
-    'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
-    'JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex ' .
-    'WHERE s.id = :sid AND a.status = 0', array('sid' => $stepid));
+        'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
+        'JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex ' .
+        'WHERE s.id = :sid AND a.status = 0', array('sid' => $stepid));
 
 if ($hasrecords) {
+    $courseid = null;
+    $coursename = null;
+    if ($mform->is_validated()) {
+        $data = $mform->get_data();
+        var_dump($data);
+        $courseid = $data->courseid;
+        $coursename = $data->coursename;
+    }
     $mform->display();
 
     echo get_string('courses_waiting', 'lifecyclestep_adminapprove',
-        array('step' => $step->instancename, 'workflow' => $workflow->title));
+            array('step' => $step->instancename, 'workflow' => $workflow->title));
     echo '<form action="" method="post" id="adminapprove-action-form"><input type="hidden" name="act" id="act" value="">';
 
-    $table = new lifecyclestep_adminapprove\decision_table($stepid);
+    $table = new lifecyclestep_adminapprove\decision_table($stepid, $courseid, $coursename);
     $table->out(30, false);
 
+    if ($courseid || $coursename) {
+        $params = array('sesskey' => sesskey(), '_qf__lifecyclestep_adminapprove_course_filter_form' => 1, 'courseid' => $courseid,
+                'coursename' => $coursename);
+        echo \lifecyclestep_adminapprove\html_helper::render_hidden_input($params);
+    }
+
     echo '</form>';
-
-    echo 'Bulk actions:<br>';
-    echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-proceed">' . get_string('proceedselected', 'lifecyclestep_adminapprove') . '</div>';
-    echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-rollback">' . get_string('rollbackselected', 'lifecyclestep_adminapprove') . '</div>';
-
+    if ($table->totalrows) {
+        echo 'Bulk actions:<br>';
+        echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-proceed">' .
+                get_string('proceedselected', 'lifecyclestep_adminapprove') . '</div>';
+        echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-rollback">' .
+                get_string('rollbackselected', 'lifecyclestep_adminapprove') . '</div>';
+    }
     $PAGE->requires->js_call_amd('lifecyclestep_adminapprove/init', 'init');
 } else {
     echo get_string('no_courses_waiting', 'lifecyclestep_adminapprove',
-        array('step' => $step->instancename, 'workflow' => $workflow->title));
+            array('step' => $step->instancename, 'workflow' => $workflow->title));
 }
 
 echo $OUTPUT->footer();
