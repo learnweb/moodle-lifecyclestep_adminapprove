@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Life Cycle Admin Approve Step
+ * Cache Definition for Admin Approve Step
  *
  * @package tool_lifecycle_step
  * @subpackage adminapprove
@@ -23,7 +23,8 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-defined('MOODLE_INTERNAL') || die;
-
-$plugin->version  = 2019073001;
-$plugin->component = 'lifecyclestep_adminapprove';
+$definitions = array(
+        'mformdata' => array(
+                'mode' => cache_store::MODE_SESSION
+        )
+);

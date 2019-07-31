@@ -54,10 +54,17 @@ if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
     $DB->execute($sql);
 }
 
+$mformdata = cache::make('lifecyclestep_adminapprove', 'mformdata');
+
 $mform = new \lifecyclestep_adminapprove\course_filter_form($PAGE->url->out());
 if ($mform->is_cancelled()) {
+    $mformdata->delete('data');
     redirect($PAGE->url);
 }
+if ($mformdata->has('data')) {
+    $mform->set_data($mformdata->get('data'));
+}
+
 
 echo $OUTPUT->header();
 echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
@@ -72,34 +79,30 @@ if ($hasrecords) {
     $coursename = null;
     if ($mform->is_validated()) {
         $data = $mform->get_data();
-        var_dump($data);
         $courseid = $data->courseid;
         $coursename = $data->coursename;
+        $mformdata->set('data', $data);
     }
     $mform->display();
 
     echo get_string('courses_waiting', 'lifecyclestep_adminapprove',
             array('step' => $step->instancename, 'workflow' => $workflow->title));
-    echo '<form action="" method="post" id="adminapprove-action-form"><input type="hidden" name="act" id="act" value="">';
+    echo '<form action="" method="post"><input type="hidden" name="sesskey" value="' . sesskey() . '"';
 
     $table = new lifecyclestep_adminapprove\decision_table($stepid, $courseid, $coursename);
     $table->out(30, false);
-
-    if ($courseid || $coursename) {
-        $params = array('sesskey' => sesskey(), '_qf__lifecyclestep_adminapprove_course_filter_form' => 1, 'courseid' => $courseid,
-                'coursename' => $coursename);
-        echo \lifecyclestep_adminapprove\html_helper::render_hidden_input($params);
-    }
-
-    echo '</form>';
     if ($table->totalrows) {
         echo 'Bulk actions:<br>';
-        echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-proceed">' .
-                get_string('proceedselected', 'lifecyclestep_adminapprove') . '</div>';
-        echo '<div class="btn btn-secondary m-1" id="adminapprove-bulk-rollback">' .
-                get_string('rollbackselected', 'lifecyclestep_adminapprove') . '</div>';
+        echo html_writer::start_div('singlebutton');
+        echo html_writer::tag('button', get_string('proceedselected', 'lifecyclestep_adminapprove'),
+                array('type' => 'submit', 'name' => 'act', 'value' => 'proceed', 'class' => 'btn btn-secondary'));
+        echo html_writer::end_div() . html_writer::start_div('singlebutton');
+        echo html_writer::tag('button', get_string('rollbackselected', 'lifecyclestep_adminapprove'),
+                array('type' => 'submit', 'name' => 'act', 'value' => 'rollback', 'class' => 'btn btn-secondary'));
+        echo html_writer::end_div();
     }
-    $PAGE->requires->js_call_amd('lifecyclestep_adminapprove/init', 'init');
+    echo '</form>';
+    $PAGE->requires->js_call_amd('lifecyclestep_adminapprove/init', 'init', array(sesskey(), $PAGE->url->out()));
 } else {
     echo get_string('no_courses_waiting', 'lifecyclestep_adminapprove',
             array('step' => $step->instancename, 'workflow' => $workflow->title));

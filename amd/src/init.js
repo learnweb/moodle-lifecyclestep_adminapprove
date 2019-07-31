@@ -27,19 +27,33 @@
  */
 define(['jquery'], function($) {
     return {
-        init: function() {
+        init: function(sesskey, url) {
+            console.log(sesskey, url);
             $('input[name="checkall"]').click(function() {
                 $('input[name="c[]"]').prop('checked', $('input[name="checkall"]').prop('checked'));
             });
 
-            $('#adminapprove-bulk-proceed').click(function() {
-                $('#act').get(0).value = 'proceed';
-                $('#adminapprove-action-form').submit();
-            });
-
-            $('#adminapprove-bulk-rollback').click(function() {
-                $('#act').get(0).value = 'rollback';
-                $('#adminapprove-action-form').submit();
+            $('.adminapprove-action').each(function() {
+                $(this).click(function() {
+                    var post = {
+                        'act': $(this).attr('data-action'),
+                        'c[]': $(this).attr('data-content'),
+                        'sesskey': sesskey
+                    };
+                    var form = document.createElement('form');
+                    form.hidden = true;
+                    form.method = 'post';
+                    form.action = url;
+                    for (var k in post) {
+                        var input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = k;
+                        input.value = post[k];
+                        form.append(input);
+                    }
+                    document.body.append(form);
+                    form.submit();
+                });
             });
         }
     };

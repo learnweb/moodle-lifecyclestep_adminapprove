@@ -72,26 +72,16 @@ class decision_table extends \table_sql {
     }
 
     public function col_tools($row) {
-        $postdata = array();
-        if ($this->courseid || $this->coursename) {
-            $postdata['_qf__lifecyclestep_adminapprove_course_filter_form'] = 1;
-            $postdata['courseid'] = $this->courseid;
-            $postdata['coursename'] = $this->coursename;
-        }
-        $postdata['c[]'] = $row->id;
-        $postdata['sesskey'] = sesskey();
-        $postdata['act'] = 'proceed';
-        $proceedbutton = \html_writer::tag('button', get_string('proceed', 'lifecyclestep_adminapprove'),
-                array('type' => 'submit', 'class' => 'btn btn-secondary'));
-        $proceedhtml = html_helper::render_button($this->baseurl, $postdata, $proceedbutton);
-        $postdata['act'] = 'rollback';
-        $rollbackbutton = \html_writer::tag('button', get_string('rollback', 'lifecyclestep_adminapprove'),
-                array('type' => 'submit', 'class' => 'btn btn-secondary'));
-        $rollbackhtml = html_helper::render_button($this->baseurl, $postdata, $rollbackbutton);
-        return $proceedhtml . $rollbackhtml;
+        $output = \html_writer::start_div('singlebutton');
+        $output .= \html_writer::tag('div', get_string('proceed', 'lifecyclestep_adminapprove'),
+                array('class' => 'btn btn-secondary adminapprove-action', 'data-action' => 'proceed', 'data-content' => $row->id));
+        $output .= \html_writer::end_div();
+        $output .= \html_writer::start_div('singlebutton');
+        $output .= \html_writer::tag('div', get_string('rollback', 'lifecyclestep_adminapprove'),
+                array('class' => 'btn btn-secondary adminapprove-action', 'data-action' => 'rollback', 'data-content' => $row->id));
+        $output .= \html_writer::end_div();
+        return $output;
     }
-
-    //<button type="submit" class="btn btn-secondary" id="single_button5d3e400e8edb428" title="">Proceed</button>
 
     public function print_nothing_to_display() {
         global $OUTPUT;
