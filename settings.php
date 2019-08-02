@@ -15,30 +15,18 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Life Cycle Admin Approve Step
+ * Settings page which gives an overview over running lifecycle processes.
  *
- * @package tool_lifecycle_step
- * @subpackage adminapprove
+ * @package tool_lifecycle
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die;
 
-require_once(__DIR__ . '/../../../../../config.php');
-require_once($CFG->libdir . '/adminlib.php');
+if ($hassiteconfig) {
 
-admin_externalpage_setup('lifecyclestep_adminapprove_manage');
+    $ADMIN->add('lifecycle_category', new admin_externalpage('lifecyclestep_adminapprove_manage',
+            get_string('manage-adminapprove', 'lifecyclestep_adminapprove'),
+            new moodle_url('/admin/tool/lifecycle/step/adminapprove/index.php')));
 
-$PAGE->set_context(context_system::instance());
-$PAGE->set_pagelayout('standard');
-$PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/index.php"));
-
-echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
-
-$table = new lifecyclestep_adminapprove\step_table();
-$table->out(100, false);
-
-$PAGE->requires->js_call_amd('lifecyclestep_adminapprove/link-steps', 'init');
-
-echo $OUTPUT->footer();
-
+}

@@ -40,3 +40,4 @@ $string['rollback'] = 'Rollback';
 $string['amount_courses'] = 'Remaining waiting courses';
 $string['only_number'] = 'Only numeric characters allowed!';
 $string['nothingtodisplay'] = 'There are no courses waiting for approval matching your current filters.';
+$string['manage-adminapprove'] = 'Manage Admin Approve Steps';
