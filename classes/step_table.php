@@ -54,7 +54,19 @@ class step_table extends \table_sql {
     }
 
     public function col_stepname($row) {
-        return '<div data-stepid="' . $row->id . '" hidden></div>' . $row->stepname;
+        return '<div data-stepid="' . $row->id . '" hidden></div> <a href="approvestep.php?stepid='. $row->id .'">'
+                . $row->stepname . '</a>';
+    }
+
+    public function print_nothing_to_display() {
+        global $OUTPUT;
+
+        // Render button to allow user to reset table preferences.
+        echo $this->render_reset_button();
+
+        $this->print_initials_bar();
+
+        echo get_string('nostepstodisplay', 'lifecyclestep_adminapprove');
     }
 
 }

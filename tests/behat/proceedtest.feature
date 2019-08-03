@@ -1,4 +1,4 @@
-@tool @tool_lifecycle
+@lifecyclestep @lifecyclestep_adminapprove @javascript
 Feature: Add a workflow with an adminapprove step and test it
 
   Background:
@@ -9,7 +9,7 @@ Feature: Add a workflow with an adminapprove step and test it
       | Course 3 | C3        |
       | Course 4 | C4        |
     And I log in as "admin"
-    And I navigate to "Life Cycle > Workflow Settings" in site administration
+    And I navigate to "Plugins > Life Cycle > Workflow Settings" in site administration
     And I press "Add Workflow"
     And I set the following fields to these values:
       | Title                    | Admin Approve Step WF #1 |
@@ -32,8 +32,15 @@ Feature: Add a workflow with an adminapprove step and test it
     And I press "Activate"
 
   Scenario: Test interaction of email step
-    When I am on "/admin/tool/lifecycle/step/adminapprove/index.php"
-    Then I should see "Nothing to Display"
+    When I navigate to "Plugins > Life Cycle > Manage Admin Approve Steps" in site administration
+    Then I should see "There are currently no steps waiting for interaction."
     When I run the scheduled task "tool_lifecycle\task\lifecycle_task"
-    And I am on "/admin/tool/lifecycle/step/adminapprove/index.php"
-    And I click on "Admin Approve Step" "text"
+    And I reload the page
+    And I click on "Admin Approve Step #1" "link"
+    And I click on "//div[text() = 'Proceed']" "xpath_element"
+    And I wait to be redirected
+    And I reload the page
+    Then I should not see "Course 1"
+    When I click on the tool "Rollback" in the "Course 2" row of the "lifecyclestep_adminapprove-decisiontable" table
+    And I wait to be redirected
+    Then I should not see "Course 2"

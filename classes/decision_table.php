@@ -37,7 +37,7 @@ class decision_table extends \table_sql {
     private $coursename;
 
     public function __construct($stepid, $courseid, $coursename) {
-        parent::__construct('lifecyclestep_adminapprove-table');
+        parent::__construct('lifecyclestep_adminapprove-decisiontable');
         $this->courseid = $courseid;
         $this->coursename = $coursename;
         $this->define_baseurl("/admin/tool/lifecycle/step/adminapprove/approvestep.php?stepid=$stepid");
