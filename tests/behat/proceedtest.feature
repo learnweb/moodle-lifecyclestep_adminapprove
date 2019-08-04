@@ -31,13 +31,13 @@ Feature: Add a workflow with an adminapprove step and test it
     And I press "Back"
     And I press "Activate"
 
-  Scenario: Test interaction of email step
+  Scenario: Test interaction of admin approve step
     When I navigate to "Plugins > Life Cycle > Manage Admin Approve Steps" in site administration
     Then I should see "There are currently no steps waiting for interaction."
     When I run the scheduled task "tool_lifecycle\task\lifecycle_task"
     And I reload the page
     And I click on "Admin Approve Step #1" "link"
-    And I click on "//div[text() = 'Proceed']" "xpath_element"
+    And I click on "//*[contains(text(), 'Course 1')]/ancestor::tr//div[text() = 'Proceed' and contains(@class ,'adminapprove-action')]" "xpath_element"
     And I wait to be redirected
     And I reload the page
     Then I should not see "Course 1"
