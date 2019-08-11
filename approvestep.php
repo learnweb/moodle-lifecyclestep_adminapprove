@@ -49,7 +49,7 @@ $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/approves
 
 if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
     $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
-            'SET status = ' . ($action == 'proceed' ? 1 : 2) .
+            'SET status = ' . ($action == 'proceed' ? 1 : 2) . ' ' .
             'WHERE id IN (' . implode(',', $ids) . ') ';
     $DB->execute($sql);
 }
