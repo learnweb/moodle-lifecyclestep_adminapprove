@@ -12,7 +12,7 @@ addons:
   postgresql: "9.4"
   apt:
     packages:
-      - chromium-chomedriver
+      - chromium-chromedriver
 
 php:
   - 7.0
