@@ -28,7 +28,7 @@ namespace lifecyclestep_adminapprove;
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once $CFG->libdir . '/formslib.php';
+require_once($CFG->libdir . '/formslib.php');
 
 class course_filter_form extends \moodleform {
 

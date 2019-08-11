@@ -28,7 +28,7 @@ namespace lifecyclestep_adminapprove;
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once $CFG->libdir . '/tablelib.php';
+require_once($CFG->libdir . '/tablelib.php');
 
 class step_table extends \table_sql {
 

@@ -37,9 +37,12 @@ Feature: Add a workflow with an adminapprove step and test it
     When I run the scheduled task "tool_lifecycle\task\lifecycle_task"
     And I reload the page
     And I click on "Admin Approve Step #1" "link"
-    And I click on "//*[contains(text(), 'Course 1')]/ancestor::tr//div[text() = 'Proceed' and contains(@class ,'adminapprove-action')]" "xpath_element"
+    Then I should see "Course 1"
+    And I should see "Course 2"
+    And I should see "Course 3"
+    And I should see "Course 4"
+    When I click on the tool "Proceed" in the "Course 1" row of the "lifecyclestep_adminapprove-decisiontable" table
     And I wait to be redirected
-    And I reload the page
     Then I should not see "Course 1"
     When I click on the tool "Rollback" in the "Course 2" row of the "lifecyclestep_adminapprove-decisiontable" table
     And I wait to be redirected

@@ -28,7 +28,7 @@ namespace lifecyclestep_adminapprove;
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once $CFG->libdir . '/tablelib.php';
+require_once($CFG->libdir . '/tablelib.php');
 
 class decision_table extends \table_sql {
 
@@ -73,12 +73,14 @@ class decision_table extends \table_sql {
 
     public function col_tools($row) {
         $output = \html_writer::start_div('singlebutton');
-        $output .= \html_writer::tag('div', get_string('proceed', 'lifecyclestep_adminapprove'),
-                array('class' => 'btn btn-secondary adminapprove-action', 'data-action' => 'proceed', 'data-content' => $row->id));
+        $output .= \html_writer::tag('button', get_string('proceed', 'lifecyclestep_adminapprove'),
+                array('class' => 'btn btn-secondary adminapprove-action', 'data-action' => 'proceed', 'data-content' => $row->id,
+                        'type' => 'button'));
         $output .= \html_writer::end_div();
         $output .= \html_writer::start_div('singlebutton');
-        $output .= \html_writer::tag('div', get_string('rollback', 'lifecyclestep_adminapprove'),
-                array('class' => 'btn btn-secondary adminapprove-action', 'data-action' => 'rollback', 'data-content' => $row->id));
+        $output .= \html_writer::tag('button', get_string('rollback', 'lifecyclestep_adminapprove'),
+                array('class' => 'btn btn-secondary adminapprove-action', 'data-action' => 'rollback', 'data-content' => $row->id,
+                        'type' => 'button'));
         $output .= \html_writer::end_div();
         return $output;
     }
