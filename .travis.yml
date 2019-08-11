@@ -80,14 +80,14 @@ jobs:
       - moodle-plugin-ci install
       script:
       - moodle-plugin-ci phpunit --coverage-clover
-      - moodle-plugin-ci behat
+      - moodle-plugin-ci behat --profile chrome
 
 # Unit tests and behat tests against full matrix.
 install:
   - moodle-plugin-ci install
 script:
   - moodle-plugin-ci phpunit --coverage-clover
-  - moodle-plugin-ci behat
+  - moodle-plugin-ci behat --profile chrome
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
