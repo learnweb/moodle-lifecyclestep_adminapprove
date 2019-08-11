@@ -10,7 +10,9 @@ cache:
 
 addons:
   postgresql: "9.4"
-  chrome: stable
+  apt:
+    packages:
+      - chromium-chomedriver
 
 php:
   - 7.0
@@ -77,7 +79,7 @@ jobs:
       - moodle-plugin-ci install
       script:
       - moodle-plugin-ci phpunit --coverage-clover
-      - moodle-plugin-ci behat
+      - moodle-plugin-ci behat --profile chrome
 
 # Unit tests and behat tests against full matrix.
 install:
