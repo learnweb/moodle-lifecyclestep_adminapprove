@@ -48,10 +48,15 @@ $PAGE->set_pagelayout('standard');
 $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/approvestep.php?stepid=$stepid"));
 
 if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
+    require_sesskey();
+
     $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
             'SET status = ' . ($action == 'proceed' ? 1 : 2) . ' ' .
-            'WHERE id IN (' . implode(',', $ids) . ') ';
+            'WHERE id IN (' . implode(',', $ids) . ') ' .
+            'AND status = 0';
     $DB->execute($sql);
+
+    redirect($PAGE->url);
 }
 
 $mformdata = cache::make('lifecyclestep_adminapprove', 'mformdata');
