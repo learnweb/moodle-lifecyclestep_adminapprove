@@ -41,6 +41,8 @@ if ($step->subpluginname !== 'adminapprove') {
     throw new moodle_exception('The given step is not a Admin Approve Step.');
 }
 
+const ROLLBACK = 'rollback', ROLLBACK_ALL = 'rollbackall', PROCEED = 'proceed', PROCEED_ALL = 'proceedall';
+
 $workflow = \tool_lifecycle\manager\workflow_manager::get_workflow($step->workflowid);
 
 $PAGE->set_context(context_system::instance());
@@ -49,18 +51,23 @@ $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/approves
 $PAGE->set_heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 $PAGE->set_title(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
-if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
+if ($action) {
     require_sesskey();
 
-    $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
-            'SET status = ' . ($action == 'proceed' ? 1 : 2) . ' ' .
-            'WHERE id IN (' . implode(',', $ids) . ') ' .
-            'AND status = 0';
-    $DB->execute($sql);
-
+    if (is_array($ids) && count($ids) > 0 && ($action == PROCEED || $action == ROLLBACK)) {
+        $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
+                'SET status = ' . ($action == PROCEED ? 1 : 2) . ' ' .
+                'WHERE id IN (' . implode(',', $ids) . ') ' .
+                'AND status = 0';
+        $DB->execute($sql);
+    } else if ($action == PROCEED_ALL || $action == ROLLBACK_ALL) {
+        $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
+                'SET status = ' . ($action == PROCEED_ALL ? 1 : 2) . ' ' .
+                'WHERE status = 0';
+        $DB->execute($sql);
+    }
     redirect($PAGE->url);
 }
-
 $mformdata = cache::make('lifecyclestep_adminapprove', 'mformdata');
 
 $mform = new \lifecyclestep_adminapprove\course_filter_form($PAGE->url->out());
@@ -92,21 +99,29 @@ if ($hasrecords) {
 
     echo get_string('courses_waiting', 'lifecyclestep_adminapprove',
             array('step' => $step->instancename, 'workflow' => $workflow->title));
-    echo '<form action="" method="post"><input type="hidden" name="sesskey" value="' . sesskey() . '"';
+    echo '<form action="" method="post"><input type="hidden" name="sesskey" value="' . sesskey() . '">';
 
     $table = new lifecyclestep_adminapprove\decision_table($stepid, $courseid, $coursename);
-    $table->out(30, false);
+    $table->out(100, false);
     if ($table->totalrows) {
-        echo 'Bulk actions:<br>';
+        echo get_string('bulkactions') . ':<br>';
         echo html_writer::start_div('singlebutton');
         echo html_writer::tag('button', get_string('proceedselected', 'lifecyclestep_adminapprove'),
-                array('type' => 'submit', 'name' => 'act', 'value' => 'proceed', 'class' => 'btn btn-secondary'));
+                array('type' => 'submit', 'name' => 'act', 'value' => PROCEED, 'class' => 'btn btn-secondary'));
         echo html_writer::end_div() . html_writer::start_div('singlebutton');
         echo html_writer::tag('button', get_string('rollbackselected', 'lifecyclestep_adminapprove'),
-                array('type' => 'submit', 'name' => 'act', 'value' => 'rollback', 'class' => 'btn btn-secondary'));
+                array('type' => 'submit', 'name' => 'act', 'value' => ROLLBACK, 'class' => 'btn btn-secondary'));
         echo html_writer::end_div();
     }
     echo '</form>';
+
+    $button = new \single_button(new moodle_url($PAGE->url, array('act' => PROCEED_ALL)),
+            get_string(PROCEED_ALL, 'lifecyclestep_adminapprove'));
+    echo $OUTPUT->render($button);
+
+    $button = new \single_button(new moodle_url($PAGE->url, array('act' => ROLLBACK_ALL)),
+            get_string(ROLLBACK_ALL, 'lifecyclestep_adminapprove'));
+    echo $OUTPUT->render($button);
     $PAGE->requires->js_call_amd('lifecyclestep_adminapprove/init', 'init', array(sesskey(), $PAGE->url->out()));
 } else {
     echo get_string('no_courses_waiting', 'lifecyclestep_adminapprove',

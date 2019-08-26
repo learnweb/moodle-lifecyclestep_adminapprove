@@ -42,3 +42,6 @@ $string['only_number'] = 'Only numeric characters allowed!';
 $string['nothingtodisplay'] = 'There are no courses waiting for approval matching your current filters.';
 $string['manage-adminapprove'] = 'Manage Admin Approve Steps';
 $string['nostepstodisplay'] = 'There are currently no steps waiting for interaction.';
+$string['bulkactions'] = 'Bulk actions';
+$string['proceedall'] = 'Proceed all';
+$string['rollbackall'] = 'Rollback all';
