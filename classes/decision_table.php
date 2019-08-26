@@ -41,16 +41,20 @@ class decision_table extends \table_sql {
         $this->courseid = $courseid;
         $this->coursename = $coursename;
         $this->define_baseurl("/admin/tool/lifecycle/step/adminapprove/approvestep.php?stepid=$stepid");
-        $this->define_columns(['checkbox', 'courseid', 'course', 'tools']);
+        $this->define_columns(['checkbox', 'courseid', 'course', 'category', 'startdate', 'tools']);
         $this->define_headers(
-                array(\html_writer::checkbox('checkall', null, false), get_string('courseid', 'lifecyclestep_adminapprove'),
+                array(\html_writer::checkbox('checkall', null, false),
+                        get_string('courseid', 'lifecyclestep_adminapprove'),
                         get_string('course'),
+                        get_string('category'),
+                        get_string('startdate'),
                         get_string('tools', 'lifecyclestep_adminapprove')));
         $this->column_nosort = array('checkbox', 'tools');
-        $fields = 'm.id, w.displaytitle as workflow, c.id as courseid, c.fullname as course, m.status';
+        $fields = 'm.id, w.displaytitle as workflow, c.id as courseid, c.fullname as course, cc.name as category, c.startdate, m.status';
         $from = '{lifecyclestep_adminapprove} m ' .
                 'LEFT JOIN {tool_lifecycle_process} p ON p.id = m.processid ' .
                 'LEFT JOIN {course} c ON c.id = p.courseid ' .
+                'LEFT JOIN {course_categories} cc ON c.category = cc.id ' .
                 'LEFT JOIN {tool_lifecycle_workflow} w ON w.id = p.workflowid ' .
                 'LEFT JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex';
         $where = 'm.status = 0 AND s.id = :sid ';
@@ -69,6 +73,38 @@ class decision_table extends \table_sql {
 
     public function col_checkbox($row) {
         return \html_writer::checkbox('c[]', $row->id, false);
+    }
+
+    /**
+     * Render courseid column.
+     * @param $row
+     * @return string course link
+     */
+    public function col_courseid($row) {
+        return \html_writer::link(course_get_url($row->courseid), $row->courseid);
+    }
+
+    /**
+     * Render coursefullname column.
+     * @param $row
+     * @return string course link
+     */
+    public function col_course($row) {
+        return \html_writer::link(course_get_url($row->courseid), $row->course);
+    }
+
+    /**
+     * Render startdate column.
+     * @param $row
+     * @return string human readable date
+     */
+    public function col_startdate($row) {
+        if ($row->startdate) {
+            $dateformat = get_string('strftimedate', 'langconfig');
+            return userdate($row->startdate, $dateformat);
+        } else {
+            return "-";
+        }
     }
 
     public function col_tools($row) {

@@ -46,6 +46,8 @@ $workflow = \tool_lifecycle\manager\workflow_manager::get_workflow($step->workfl
 $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('standard');
 $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/approvestep.php?stepid=$stepid"));
+$PAGE->set_heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
+$PAGE->set_title(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
 if (count($ids) > 0 && ($action == 'proceed' || $action == 'rollback')) {
     require_sesskey();
@@ -70,9 +72,7 @@ if ($mformdata->has('data')) {
     $mform->set_data($mformdata->get('data'));
 }
 
-
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
 $hasrecords = $DB->record_exists_sql('SELECT a.id FROM {lifecyclestep_adminapprove} a ' .
         'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
