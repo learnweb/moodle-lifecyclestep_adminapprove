@@ -61,9 +61,15 @@ if ($action) {
                 'AND status = 0';
         $DB->execute($sql);
     } else if ($action == PROCEED_ALL || $action == ROLLBACK_ALL) {
+        $sql = 'SELECT p.id FROM {lifecyclestep_adminapprove} a ' .
+                'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
+                'JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex ' .
+                'WHERE s.id = ' . $stepid;
+        $ids = array_keys($DB->get_records_sql_menu($sql));
         $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
                 'SET status = ' . ($action == PROCEED_ALL ? 1 : 2) . ' ' .
-                'WHERE status = 0';
+                'WHERE status = 0 ' .
+                'AND processid IN (' . implode(",", $ids) . ')';
         $DB->execute($sql);
     }
     redirect($PAGE->url);
