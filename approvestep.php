@@ -55,22 +55,24 @@ if ($action) {
     require_sesskey();
 
     if (is_array($ids) && count($ids) > 0 && ($action == PROCEED || $action == ROLLBACK)) {
+        list($insql, $inparams) = $DB->get_in_or_equal($ids);
         $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
                 'SET status = ' . ($action == PROCEED ? 1 : 2) . ' ' .
-                'WHERE id IN (' . implode(',', $ids) . ') ' .
+                'WHERE id ' . $insql .
                 'AND status = 0';
-        $DB->execute($sql);
+        $DB->execute($sql, $inparams);
     } else if ($action == PROCEED_ALL || $action == ROLLBACK_ALL) {
         $sql = 'SELECT p.id FROM {lifecyclestep_adminapprove} a ' .
                 'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
                 'JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex ' .
                 'WHERE s.id = ' . $stepid;
         $ids = array_keys($DB->get_records_sql_menu($sql));
+        list($insql, $inparams) = $DB->get_in_or_equal($ids);
         $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
                 'SET status = ' . ($action == PROCEED_ALL ? 1 : 2) . ' ' .
                 'WHERE status = 0 ' .
-                'AND processid IN (' . implode(",", $ids) . ')';
-        $DB->execute($sql);
+                'AND processid ' . $insql;
+        $DB->execute($sql, $inparams);
     }
     redirect($PAGE->url);
 }
