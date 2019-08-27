@@ -54,6 +54,8 @@ class adminapprove extends libbase {
     }
 
     public function rollback_course($processid, $instanceid, $course) {
+        global $DB;
+        $DB->delete_records('lifecyclestep_adminapprove', array('processid' => $processid));
         return;
     }
 
