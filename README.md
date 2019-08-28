@@ -7,6 +7,6 @@ This is meant as a safeguard, so that admins can check whether their workflows a
 ![Adminapprove table](https://raw.githubusercontent.com/justusdieckmann/images/master/lifecyclestep_adminapprove.png);
 
 ## Behaviour
-Each cron-job, for each adminapprove step, all courses that are processed there, get added to the corresponding step table and the admin is notified.
+Each cron-job, all courses that are processed in a adminapprove step get added to the corresponding step table and the admin is notified.
 
 If the admin marks courses to be proceeded / rolled back, they are removed from the step table and they are proceeded / rolled back during the next cron job.
