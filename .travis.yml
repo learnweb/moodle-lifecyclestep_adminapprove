@@ -53,7 +53,7 @@ before_install:
   - composer selfupdate
   - composer create-project -n --no-dev --prefer-dist blackboard-open-source/moodle-plugin-ci ci ^2
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
-  - moodle-plugin-ci add-plugin --branch feature/subplugin-settings justusdieckmann/moodle-tool_lifecycle
+  - moodle-plugin-ci add-plugin learnweb/moodle-tool_lifecycle
 
 jobs:
   include:
