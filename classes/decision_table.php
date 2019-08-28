@@ -50,7 +50,8 @@ class decision_table extends \table_sql {
                         get_string('startdate'),
                         get_string('tools', 'lifecyclestep_adminapprove')));
         $this->column_nosort = array('checkbox', 'tools');
-        $fields = 'm.id, w.displaytitle as workflow, c.id as courseid, c.fullname as course, cc.name as category, c.startdate, m.status';
+        $fields = 'm.id, w.displaytitle as workflow, c.id as courseid, c.fullname as course, cc.name as category,
+            c.startdate, m.status';
         $from = '{lifecyclestep_adminapprove} m ' .
                 'LEFT JOIN {tool_lifecycle_process} p ON p.id = m.processid ' .
                 'LEFT JOIN {course} c ON c.id = p.courseid ' .

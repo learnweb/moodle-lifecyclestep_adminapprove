@@ -46,5 +46,4 @@ $string['bulkactions'] = 'Bulk actions';
 $string['proceedall'] = 'Proceed all';
 $string['rollbackall'] = 'Rollback all';
 $string['statusmessage'] = 'Status message';
-$string['statusmessage_help'] = 'Status message, which is displayed to a teacher, 
-if a process of a course is at this admin approve step.';
+$string['statusmessage_help'] = 'Status message, which is displayed to a teacher, if a process of a course is at this admin approve step.';
