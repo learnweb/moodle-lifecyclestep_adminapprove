@@ -93,4 +93,17 @@ class adminapprove extends libbase {
                 get_string('emailcontenthtml', 'lifecyclestep_adminapprove', $obj));
         }
     }
+
+    public function instance_settings() {
+        return array(
+            new instance_setting('statusmessage', PARAM_TEXT),
+        );
+    }
+
+    public function extend_add_instance_form_definition($mform) {
+        $elementname = 'statusmessage';
+        $mform->addElement('text', $elementname, get_string('statusmessage', 'lifecyclestep_adminapprove'));
+        $mform->addHelpButton($elementname, 'statusmessage', 'lifecyclestep_adminapprove');
+        $mform->setType($elementname, PARAM_TEXT);
+    }
 }
