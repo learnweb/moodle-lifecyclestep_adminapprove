@@ -44,12 +44,12 @@ class step_table extends \table_sql {
         $fields = 's.id as id, s.instancename as stepname, w.title as workflowname, b.courses as courses';
         $from = '( ' .
             'SELECT p.workflowid, p.stepindex, COUNT(1) as courses FROM {lifecyclestep_adminapprove} a ' .
-            'LEFT JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
+            'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
             'WHERE a.status = 0 ' .
             'GROUP BY p.workflowid, p.stepindex ' .
         ') b ' .
-        'LEFT JOIN {tool_lifecycle_step} s ON s.workflowid = b.workflowid AND s.sortindex = b.stepindex ' .
-        'LEFT JOIN {tool_lifecycle_workflow} w ON w.id = b.workflowid';
+        'JOIN {tool_lifecycle_step} s ON s.workflowid = b.workflowid AND s.sortindex = b.stepindex ' .
+        'JOIN {tool_lifecycle_workflow} w ON w.id = b.workflowid';
         $this->set_sql($fields, $from, 'TRUE');
     }
 
