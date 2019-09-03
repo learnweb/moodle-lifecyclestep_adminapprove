@@ -35,7 +35,7 @@ require_once(__DIR__ . '/../lib.php');
 
 class adminapprove extends libbase {
 
-    private $newcourses = 0;
+    private static $newcourses = 0;
 
     /**
      * @param int $processid of the respective process.
@@ -49,7 +49,7 @@ class adminapprove extends libbase {
         $record->processid = $processid;
         $record->status = 0;
         $DB->insert_record('lifecyclestep_adminapprove', $record);
-        $this->newcourses++;
+        self::$newcourses++;
         return step_response::waiting();
     }
 
@@ -79,15 +79,15 @@ class adminapprove extends libbase {
     }
 
     public function pre_processing_bulk_operation() {
-        $this->newcourses = 0;
+        self::$newcourses = 0;
     }
 
     public function post_processing_bulk_operation() {
         global $CFG;
-        if ($this->newcourses > 0) {
+        if (self::$newcourses > 0) {
             $obj = new \stdClass();
-            $obj->amount = $this->newcourses;
-            $obj->link = $CFG->wwwroot . '/admin/tool/lifecycle/step/adminapprove/approvestep.php';
+            $obj->amount = self::$newcourses;
+            $obj->link = $CFG->wwwroot . '/admin/tool/lifecycle/step/adminapprove/index.php';
 
             email_to_user(get_admin(), \core_user::get_noreply_user(),
                 get_string('emailsubject', 'lifecyclestep_adminapprove'),
