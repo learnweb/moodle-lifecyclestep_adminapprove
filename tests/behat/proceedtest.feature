@@ -34,7 +34,7 @@ Feature: Add a workflow with an adminapprove step and test it
 
   Scenario: Test interaction of admin approve step
     When I navigate to "Plugins > Admin tools > Life Cycle > Manage Admin Approve Steps" in site administration
-    Then I should see "There are currently no steps waiting for interaction."
+    Then I should see "There are currently no courses waiting for interaction in any Admin Approve step."
     When I run the scheduled task "tool_lifecycle\task\lifecycle_task"
     And I reload the page
     And I click on "Admin Approve Step #1" "link"
