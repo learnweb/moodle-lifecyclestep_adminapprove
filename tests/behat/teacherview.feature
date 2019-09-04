@@ -12,7 +12,7 @@ Feature: Add a workflow with an adminapprove step and test the status in the tea
       | user     | course | role           |
       | teacher | C1     | editingteacher |
     And I log in as "admin"
-    And I navigate to "Plugins > Life Cycle > Workflow Settings" in site administration
+    And I navigate to "Plugins > Admin tools > Life Cycle > Workflow Settings" in site administration
     And I press "Add Workflow"
     And I set the following fields to these values:
       | Title                    | Admin Approve Step WF #1 |

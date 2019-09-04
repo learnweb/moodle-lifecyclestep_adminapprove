@@ -9,7 +9,7 @@ Feature: Add a workflow with an adminapprove step and test it
       | Course 3 | C3        |
       | Course 4 | C4        |
     And I log in as "admin"
-    And I navigate to "Plugins > Life Cycle > Workflow Settings" in site administration
+    And I navigate to "Plugins > Admin tools > Life Cycle > Workflow Settings" in site administration
     And I press "Add Workflow"
     And I set the following fields to these values:
       | Title                    | Admin Approve Step WF #1 |
@@ -33,7 +33,7 @@ Feature: Add a workflow with an adminapprove step and test it
     And I press "Activate"
 
   Scenario: Test interaction of admin approve step
-    When I navigate to "Plugins > Life Cycle > Manage Admin Approve Steps" in site administration
+    When I navigate to "Plugins > Admin tools > Life Cycle > Manage Admin Approve Steps" in site administration
     Then I should see "There are currently no steps waiting for interaction."
     When I run the scheduled task "tool_lifecycle\task\lifecycle_task"
     And I reload the page
