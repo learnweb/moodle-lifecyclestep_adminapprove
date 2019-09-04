@@ -87,7 +87,7 @@ class adminapprove extends libbase {
         if (self::$newcourses > 0) {
             $obj = new \stdClass();
             $obj->amount = self::$newcourses;
-            $obj->link = $CFG->wwwroot . '/admin/tool/lifecycle/step/adminapprove/index.php';
+            $obj->url = $CFG->wwwroot . '/admin/tool/lifecycle/step/adminapprove/index.php';
 
             email_to_user(get_admin(), \core_user::get_noreply_user(),
                 get_string('emailsubject', 'lifecyclestep_adminapprove'),
