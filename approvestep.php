@@ -51,31 +51,6 @@ $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/approves
 $PAGE->set_heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 $PAGE->set_title(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
-$mformdata = cache::make('lifecyclestep_adminapprove', 'mformdata');
-
-$mform = new \lifecyclestep_adminapprove\course_filter_form($PAGE->url->out());
-if ($mform->is_cancelled()) {
-    $mformdata->delete('data');
-    redirect($PAGE->url);
-}
-
-$courseid = null;
-$coursename = null;
-
-if ($mformdata->has('data')) {
-    $data = $mformdata->get('data');
-    $courseid = $data->courseid;
-    $coursename = $data->coursename;
-    $mform->set_data($data);
-}
-
-if ($mform->is_validated()) {
-    $data = $mform->get_data();
-    $courseid = $data->courseid;
-    $coursename = $data->coursename;
-    $mformdata->set('data', $data);
-}
-
 if ($action) {
     require_sesskey();
 
@@ -90,20 +65,8 @@ if ($action) {
         $sql = 'SELECT p.id FROM {lifecyclestep_adminapprove} a ' .
                 'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
                 'JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex ' .
-                'JOIN {course} c ON p.courseid = c.id ' .
-                'WHERE s.id = :stepid ';
-        $params = ['stepid' => $stepid];
-
-        if ($courseid) {
-            $sql .= 'AND c.id = :cid ';
-            $params['cid'] = $courseid;
-        }
-        if ($coursename) {
-            $sql .= "AND c.fullname LIKE :cname ";
-            $params['cname'] = '%' . trim($coursename) . '%';
-        }
-
-        $ids = array_keys($DB->get_records_sql_menu($sql, $params));
+                'WHERE s.id = ' . $stepid;
+        $ids = array_keys($DB->get_records_sql_menu($sql));
         list($insql, $inparams) = $DB->get_in_or_equal($ids);
         $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
                 'SET status = ' . ($action == PROCEED_ALL ? 1 : 2) . ' ' .
@@ -112,6 +75,16 @@ if ($action) {
         $DB->execute($sql, $inparams);
     }
     redirect($PAGE->url);
+}
+$mformdata = cache::make('lifecyclestep_adminapprove', 'mformdata');
+
+$mform = new \lifecyclestep_adminapprove\course_filter_form($PAGE->url->out());
+if ($mform->is_cancelled()) {
+    $mformdata->delete('data');
+    redirect($PAGE->url);
+}
+if ($mformdata->has('data')) {
+    $mform->set_data($mformdata->get('data'));
 }
 
 echo $OUTPUT->header();
@@ -122,11 +95,18 @@ $hasrecords = $DB->record_exists_sql('SELECT a.id FROM {lifecyclestep_adminappro
         'WHERE s.id = :sid AND a.status = 0', array('sid' => $stepid));
 
 if ($hasrecords) {
+    $courseid = null;
+    $coursename = null;
+    if ($mform->is_validated()) {
+        $data = $mform->get_data();
+        $courseid = $data->courseid;
+        $coursename = $data->coursename;
+        $mformdata->set('data', $data);
+    }
     $mform->display();
 
     echo get_string('courses_waiting', 'lifecyclestep_adminapprove',
             array('step' => $step->instancename, 'workflow' => $workflow->title));
-    echo "<br><br>";
     echo '<form action="" method="post"><input type="hidden" name="sesskey" value="' . sesskey() . '">';
 
     $table = new lifecyclestep_adminapprove\decision_table($stepid, $courseid, $coursename);
