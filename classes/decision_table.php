@@ -31,13 +31,13 @@ require_once($CFG->libdir . '/tablelib.php');
 
 class decision_table extends \table_sql {
 
-    private $courseid;
+    private $category;
 
     private $coursename;
 
-    public function __construct($stepid, $courseid, $coursename) {
+    public function __construct($stepid, $category, $coursename) {
         parent::__construct('lifecyclestep_adminapprove-decisiontable');
-        $this->courseid = $courseid;
+        $this->category = $category;
         $this->coursename = $coursename;
         $this->define_baseurl("/admin/tool/lifecycle/step/adminapprove/approvestep.php?stepid=$stepid");
         $this->define_columns(['checkbox', 'courseid', 'course', 'category', 'startdate', 'tools']);
@@ -59,13 +59,14 @@ class decision_table extends \table_sql {
                 'LEFT JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex';
         $where = 'm.status = 0 AND s.id = :sid ';
         $params = array('sid' => $stepid);
-        if ($courseid) {
-            $where .= 'AND c.id = :cid ';
-            $params['cid'] = $courseid;
+        if ($category) {
+            $where .= 'AND cc.id = :catid ';
+            $params['catid'] = $category;
         }
         if ($coursename) {
+            global $DB;
             $where .= "AND c.fullname LIKE :cname ";
-            $params['cname'] = '%' . trim($coursename) . '%';
+            $params['cname'] = '%' . $DB->sql_like_escape($coursename) . '%';
         }
         $this->set_sql($fields, $from, $where, $params);
 

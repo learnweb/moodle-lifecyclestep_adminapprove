@@ -134,7 +134,7 @@ if ($hasrecords) {
     echo "<br><br>";
     echo '<form action="" method="post"><input type="hidden" name="sesskey" value="' . sesskey() . '">';
 
-    $table = new lifecyclestep_adminapprove\decision_table($stepid, $courseid, $coursename);
+    $table = new lifecyclestep_adminapprove\decision_table($stepid, $category, $coursename);
     $table->out(100, false);
     if ($table->totalrows) {
         echo get_string('bulkactions') . ':<br>';
