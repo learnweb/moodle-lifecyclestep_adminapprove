@@ -123,6 +123,7 @@ if ($hasrecords) {
     }
     echo '</form>';
 
+    echo '<div class="mt-2">';
     $button = new \single_button(new moodle_url($PAGE->url, array('act' => PROCEED_ALL)),
             get_string(PROCEED_ALL, 'lifecyclestep_adminapprove'));
     echo $OUTPUT->render($button);
@@ -130,6 +131,7 @@ if ($hasrecords) {
     $button = new \single_button(new moodle_url($PAGE->url, array('act' => ROLLBACK_ALL)),
             get_string(ROLLBACK_ALL, 'lifecyclestep_adminapprove'));
     echo $OUTPUT->render($button);
+    echo '</div>';
     $PAGE->requires->js_call_amd('lifecyclestep_adminapprove/init', 'init', array(sesskey(), $PAGE->url->out()));
 } else {
     echo get_string('no_courses_waiting', 'lifecyclestep_adminapprove',
