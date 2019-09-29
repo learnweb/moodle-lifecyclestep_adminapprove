@@ -9,25 +9,25 @@ Feature: Add a workflow with an adminapprove step and test it
       | Course 3 | C3        |
       | Course 4 | C4        |
     And I log in as "admin"
-    And I navigate to "Plugins > Admin tools > Life Cycle > Workflow Settings" in site administration
-    And I press "Add Workflow"
+    And I navigate to "Plugins > Admin tools > Life Cycle > Workflow settings" in site administration
+    And I press "Add workflow"
     And I set the following fields to these values:
       | Title                    | Admin Approve Step WF #1 |
       | Displayed workflow title | Admin Approve Step WF #1 |
     And I press "Save changes"
     And I select "Start date delay trigger" from the "triggername" singleselect
     And I set the following fields to these values:
-      | Instance Name   | My Trigger |
+      | Instance name   | My Trigger |
       | delay[number]   | 0          |
       | delay[timeunit] | seconds    |
     And I press "Save changes"
     And I select "Admin Approve Step" from the "stepname" singleselect
     And I set the following fields to these values:
-      | Instance Name | Admin Approve Step #1 |
+      | Instance name | Admin Approve Step #1 |
       | Status message | My status |
     And I press "Save changes"
-    And I select "Delete Course Step" from the "stepname" singleselect
-    And I set the field "Instance Name" to "Delete Course #1"
+    And I select "Delete course step" from the "stepname" singleselect
+    And I set the field "Instance name" to "Delete Course #1"
     And I press "Save changes"
     And I press "Back"
     And I press "Activate"
