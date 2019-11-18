@@ -25,5 +25,8 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version  = 2019073001;
+$plugin->version  = 2019102900;
 $plugin->component = 'lifecyclestep_adminapprove';
+$plugin->dependencies = array(
+        'tool_lifecycle' => 2019102900
+);

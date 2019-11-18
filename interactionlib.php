@@ -25,14 +25,11 @@
  */
 namespace tool_lifecycle\step;
 
-use lifecyclestep_duplicate\form_duplicate;
-use tool_lifecycle\entity\process;
-use tool_lifecycle\entity\step_subplugin;
-use tool_lifecycle\manager\process_data_manager;
-use tool_lifecycle\manager\process_manager;
-use tool_lifecycle\manager\settings_manager;
-use tool_lifecycle\manager\step_manager;
-use tool_lifecycle\response\step_interactive_response;
+use tool_lifecycle\local\entity\process;
+use tool_lifecycle\local\entity\step_subplugin;
+use tool_lifecycle\local\manager\settings_manager;
+use tool_lifecycle\local\manager\step_manager;
+use tool_lifecycle\local\response\step_interactive_response;
 use tool_lifecycle\settings_type;
 
 defined('MOODLE_INTERNAL') || die();

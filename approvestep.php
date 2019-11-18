@@ -33,7 +33,7 @@ $action = optional_param('act', null, PARAM_ALPHA);
 $ids = optional_param_array('c', array(), PARAM_INT);
 $stepid = required_param('stepid', PARAM_INT);
 
-$step = \tool_lifecycle\manager\step_manager::get_step_instance($stepid);
+$step = \tool_lifecycle\local\manager\step_manager::get_step_instance($stepid);
 if (!$step) {
     throw new moodle_exception('Stepid does not correspond to any step.');
 }
@@ -43,7 +43,7 @@ if ($step->subpluginname !== 'adminapprove') {
 
 const ROLLBACK = 'rollback', ROLLBACK_ALL = 'rollbackall', PROCEED = 'proceed', PROCEED_ALL = 'proceedall';
 
-$workflow = \tool_lifecycle\manager\workflow_manager::get_workflow($step->workflowid);
+$workflow = \tool_lifecycle\local\manager\workflow_manager::get_workflow($step->workflowid);
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_pagelayout('standard');
