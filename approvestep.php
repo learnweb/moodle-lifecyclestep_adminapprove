@@ -104,12 +104,14 @@ if ($action) {
         }
 
         $ids = array_keys($DB->get_records_sql_menu($sql, $params));
-        list($insql, $inparams) = $DB->get_in_or_equal($ids);
-        $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
+        if (!empty($ids)) {
+            list($insql, $inparams) = $DB->get_in_or_equal($ids);
+            $sql = 'UPDATE {lifecyclestep_adminapprove} ' .
                 'SET status = ' . ($action == PROCEED_ALL ? 1 : 2) . ' ' .
                 'WHERE status = 0 ' .
                 'AND processid ' . $insql;
-        $DB->execute($sql, $inparams);
+            $DB->execute($sql, $inparams);
+        }
     }
     redirect($PAGE->url);
 }
