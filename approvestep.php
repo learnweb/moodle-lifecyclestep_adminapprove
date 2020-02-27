@@ -100,7 +100,7 @@ if ($action) {
         }
         if ($coursename) {
             $sql .= "AND c.fullname LIKE :cname ";
-            $params['cname'] = '%' . trim($coursename) . '%';
+            $params['cname'] = '%' . $DB->sql_like_escape($coursename) . '%';
         }
 
         $ids = array_keys($DB->get_records_sql_menu($sql, $params));
