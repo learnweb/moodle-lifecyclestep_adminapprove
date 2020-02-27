@@ -17,8 +17,7 @@
 /**
  * Cache Definition for Admin Approve Step
  *
- * @package tool_lifecycle_step
- * @subpackage adminapprove
+ * @package lifecyclestep_adminapprove
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

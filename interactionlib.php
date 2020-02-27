@@ -18,8 +18,7 @@
  * Interface for the interactions of the subplugintype step
  * It has to be implemented by all subplugins that want to use the interaction view.
  *
- * @package tool_lifecycle
- * @subpackage step
+ * @package lifecyclestep_adminapprove
  * @copyright  2017 Tobias Reischmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
