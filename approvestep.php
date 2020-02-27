@@ -23,10 +23,13 @@
  */
 
 require_once(__DIR__ . '/../../../../../config.php');
+require_once($CFG->libdir . '/adminlib.php');
 
 require_login(null, false);
 
 require_capability('moodle/site:config', context_system::instance());
+
+admin_externalpage_setup('lifecyclestep_adminapprove_manage');
 
 $action = optional_param('act', null, PARAM_ALPHA);
 $ids = optional_param_array('c', array(), PARAM_INT);
@@ -45,10 +48,8 @@ const ROLLBACK = 'rollback', ROLLBACK_ALL = 'rollbackall', PROCEED = 'proceed', 
 $workflow = \tool_lifecycle\local\manager\workflow_manager::get_workflow($step->workflowid);
 
 $PAGE->set_context(context_system::instance());
-$PAGE->set_pagelayout('standard');
 $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/approvestep.php?stepid=$stepid"));
-$PAGE->set_heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
-$PAGE->set_title(get_string('pluginname', 'lifecyclestep_adminapprove'));
+$PAGE->navbar->add($step->instancename, $PAGE->url);
 
 if ($action) {
     require_sesskey();
@@ -87,6 +88,9 @@ if ($mformdata->has('data')) {
 }
 
 echo $OUTPUT->header();
+echo $OUTPUT->heading(get_string('manage-adminapprove', 'lifecyclestep_adminapprove') . ': ' .
+        $step->instancename);
+echo "<br>";
 
 $hasrecords = $DB->record_exists_sql('SELECT a.id FROM {lifecyclestep_adminapprove} a ' .
         'JOIN {tool_lifecycle_process} p ON p.id = a.processid ' .
