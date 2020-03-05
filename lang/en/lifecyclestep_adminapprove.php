@@ -27,7 +27,6 @@ $string['emailsubject'] = 'Lifecycle: There are new courses waiting for confirma
 $string['emailcontent'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit {$a->url}.';
 $string['emailcontenthtml'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit <a href="{$a->url}">this link</a>.';
 $string['courseid'] = 'Course id';
-$string['markedas'] = 'Marked as';
 $string['workflow'] = 'Workflow';
 $string['proceedselected'] = 'Proceed selected';
 $string['rollbackselected'] = 'Rollback selected';
@@ -40,7 +39,7 @@ $string['amount_courses'] = 'Remaining waiting courses';
 $string['only_number'] = 'Only numeric characters allowed!';
 $string['nothingtodisplay'] = 'There are no courses waiting for approval matching your current filters.';
 $string['manage-adminapprove'] = 'Manage Admin Approve Steps';
-$string['nostepstodisplay'] = 'There are currently no steps waiting for interaction.';
+$string['nostepstodisplay'] = 'There are currently no courses waiting for interaction in any Admin Approve step.';
 $string['bulkactions'] = 'Bulk actions';
 $string['proceedall'] = 'Proceed all';
 $string['rollbackall'] = 'Rollback all';
