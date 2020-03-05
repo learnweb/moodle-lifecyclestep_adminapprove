@@ -60,11 +60,13 @@ if ($mform->is_cancelled()) {
 }
 
 $courseid = null;
+$category = null;
 $coursename = null;
 
 if ($mformdata->has('data')) {
     $data = $mformdata->get('data');
     $courseid = $data->courseid;
+    $category = $data->category;
     $coursename = $data->coursename;
     $mform->set_data($data);
 }
@@ -72,6 +74,7 @@ if ($mformdata->has('data')) {
 if ($mform->is_validated()) {
     $data = $mform->get_data();
     $courseid = $data->courseid;
+    $category = $data->category;
     $coursename = $data->coursename;
     $mformdata->set('data', $data);
 }
@@ -134,7 +137,7 @@ if ($hasrecords) {
     echo "<br><br>";
     echo '<form action="" method="post"><input type="hidden" name="sesskey" value="' . sesskey() . '">';
 
-    $table = new lifecyclestep_adminapprove\decision_table($stepid, $category, $coursename);
+    $table = new lifecyclestep_adminapprove\decision_table($stepid, $courseid, $category, $coursename);
     $table->out(100, false);
     if ($table->totalrows) {
         echo get_string('bulkactions') . ':<br>';

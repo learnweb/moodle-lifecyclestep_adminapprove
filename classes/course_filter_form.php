@@ -34,6 +34,9 @@ class course_filter_form extends \moodleform {
     protected function definition() {
         global $CFG;
         $mform = $this->_form;
+        $mform->addElement('text', 'courseid', get_string('courseid', 'lifecyclestep_adminapprove'));
+        $mform->setType('courseid', PARAM_ALPHANUM);
+        $mform->addRule('courseid', get_string('only_number', 'lifecyclestep_adminapprove'), 'numeric', null, 'client');
 
         $mform->addElement('text', 'coursename', get_string('course'));
         $mform->setType('coursename', PARAM_NOTAGS);

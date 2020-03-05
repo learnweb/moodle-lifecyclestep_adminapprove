@@ -35,7 +35,7 @@ class decision_table extends \table_sql {
 
     private $coursename;
 
-    public function __construct($stepid, $category, $coursename) {
+    public function __construct($stepid, $courseid, $category, $coursename) {
         parent::__construct('lifecyclestep_adminapprove-decisiontable');
         $this->category = $category;
         $this->coursename = $coursename;
@@ -59,6 +59,10 @@ class decision_table extends \table_sql {
                 'LEFT JOIN {tool_lifecycle_step} s ON s.workflowid = p.workflowid AND s.sortindex = p.stepindex';
         $where = 'm.status = 0 AND s.id = :sid ';
         $params = array('sid' => $stepid);
+        if ($courseid) {
+            $where .= 'AND c.id = :cid ';
+            $params['cid'] = $courseid;
+        }
         if ($category) {
             $where .= 'AND cc.id = :catid ';
             $params['catid'] = $category;
