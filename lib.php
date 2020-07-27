@@ -24,6 +24,7 @@
 
 namespace tool_lifecycle\step;
 
+use tool_lifecycle\local\entity\process;
 use tool_lifecycle\local\response\step_response;
 
 defined('MOODLE_INTERNAL') || die();
@@ -104,5 +105,15 @@ class adminapprove extends libbase {
         $mform->addElement('text', $elementname, get_string('statusmessage', 'lifecyclestep_adminapprove'));
         $mform->addHelpButton($elementname, 'statusmessage', 'lifecyclestep_adminapprove');
         $mform->setType($elementname, PARAM_TEXT);
+    }
+
+    /**
+     * This is called when a course and the
+     * corresponding process get deleted.
+     * @param process $process the process that was aborted.
+     */
+    public function abort_course($process) {
+        global $DB;
+        $DB->delete_records('lifecyclestep_adminapprove', array('processid' => $process->id));
     }
 }
