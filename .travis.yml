@@ -36,7 +36,7 @@ before_install:
   - phpenv config-rm xdebug.ini
   - cd ../..
   - composer selfupdate
-  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ³3
+  - composer create-project -n --no-dev --prefer-dist moodlehq/moodle-plugin-ci ci ^3
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
   - moodle-plugin-ci add-plugin learnweb/moodle-tool_lifecycle
 
@@ -81,7 +81,7 @@ install:
   - moodle-plugin-ci install
 script:
   - moodle-plugin-ci phpunit --coverage-clover
-  - moodle-plugin-ci behat
+  - moodle-plugin-ci behat --profile chrome
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
