@@ -24,6 +24,7 @@
  */
 
 $string['pluginname'] = 'Adminbestätigungs-Schritt';
+$string['privacy:metadata'] = 'Dieses Subplugin speichert keine persönlichen Daten.';
 $string['emailsubject'] = 'Kurs-Lebenszyklus: Es gibt neue Kurse, die auf Bestätigung warten.';
 $string['emailcontent'] = 'Es gibt {$a->amount} neue Kurse, die auf Bestätigung warten. Bitte besuchen Sie {$a->url}.';
 $string['emailcontenthtml'] = 'Es gibt {$a->amount} neue Kurse, die auf Bestätigung warten. Bitte klicken Sie auf <a href="{$a->url}">diesen Link</a>.';
