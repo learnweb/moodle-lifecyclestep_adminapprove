@@ -24,6 +24,7 @@
 
 $string['pluginname'] = 'Admin Approve Step';
 $string['privacy:metadata'] = 'This subplugin does not store any personal data.';
+$string['cachedef_mformdata'] = 'Caches the mform data';
 $string['emailsubject'] = 'Lifecycle: There are new courses waiting for confirmation.';
 $string['emailcontent'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit {$a->url}.';
 $string['emailcontenthtml'] = 'There are {$a->amount} new courses waiting for confirmation. Please visit <a href="{$a->url}">this link</a>.';
