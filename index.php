@@ -28,11 +28,13 @@ require_once($CFG->libdir . '/adminlib.php');
 admin_externalpage_setup('lifecyclestep_adminapprove_manage');
 
 $PAGE->set_context(context_system::instance());
-$PAGE->set_pagelayout('standard');
 $PAGE->set_url(new \moodle_url("/admin/tool/lifecycle/step/adminapprove/index.php"));
+$PAGE->set_title(get_string('pluginname', 'lifecyclestep_adminapprove'));
+$PAGE->set_heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
 echo $OUTPUT->header();
-echo $OUTPUT->heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
+$renderer = $PAGE->get_renderer('tool_lifecycle');
+echo $renderer->render_extra_navigation();
 
 $table = new lifecyclestep_adminapprove\step_table();
 $table->out(100, false);
