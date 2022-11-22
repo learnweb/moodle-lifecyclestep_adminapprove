@@ -16,13 +16,9 @@
 /**
  * Life Cycle Admin Approve Step AMD Module
  *
- * @package lifecyclestep_adminapprove
+ * @module     lifecyclestep_adminapprove/link-steps
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-
-/**
- * @module lifecyclestep_adminapprove/link-steps
  */
 define(['jquery'], function($) {
     return {

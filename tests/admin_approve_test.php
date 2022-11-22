@@ -31,6 +31,7 @@ use tool_lifecycle\task\lifecycle_task;
  * @group      lifecyclestep_adminapprove
  * @group      lifecyclestep
  * @category   test
+ * @covers     \tool_lifecycle\step\adminapprove
  * @copyright  2019 Justus Dieckmann
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
