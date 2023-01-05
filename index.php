@@ -33,8 +33,6 @@ $PAGE->set_title(get_string('pluginname', 'lifecyclestep_adminapprove'));
 $PAGE->set_heading(get_string('pluginname', 'lifecyclestep_adminapprove'));
 
 echo $OUTPUT->header();
-$renderer = $PAGE->get_renderer('tool_lifecycle');
-echo $renderer->render_extra_navigation();
 
 $table = new lifecyclestep_adminapprove\step_table();
 $table->out(100, false);
