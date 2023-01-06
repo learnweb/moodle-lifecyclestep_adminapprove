@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+namespace lifecyclestep_adminapprove;
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../../../tests/generator/lib.php');
@@ -29,10 +31,11 @@ use tool_lifecycle\task\lifecycle_task;
  * @group      lifecyclestep_adminapprove
  * @group      lifecyclestep
  * @category   test
+ * @covers     \tool_lifecycle\step\adminapprove
  * @copyright  2019 Justus Dieckmann
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class lifecyclestep_adminapprove_admin_approve_test_testcase extends \advanced_testcase {
+class admin_approve_test extends \advanced_testcase {
 
     public function test_admin_mail() {
         $this->resetAfterTest(true);
@@ -64,5 +67,4 @@ class lifecyclestep_adminapprove_admin_approve_test_testcase extends \advanced_t
         $this->assertCount(1, $sink->get_messages());
         $sink->close();
     }
-
 }

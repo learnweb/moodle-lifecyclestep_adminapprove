@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Life Cycle Admin Approve Step
+ * Life Cycle Admin Approve Step. Page for specific step.
  *
  * @package lifecyclestep_adminapprove
  * @copyright  2019 Justus Dieckmann WWU

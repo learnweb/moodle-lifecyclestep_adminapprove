@@ -29,3 +29,4 @@ $plugin->component = 'lifecyclestep_adminapprove';
 $plugin->dependencies = array(
         'tool_lifecycle' => 2019102900
 );
+$plugin->requires = 2020061500; // Requires Moodle 3.9+.
