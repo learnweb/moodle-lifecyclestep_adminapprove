@@ -13,11 +13,11 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+namespace lifecyclestep_adminapprove;
 
 namespace lifecyclestep_adminapprove;
 
 defined('MOODLE_INTERNAL') || die();
-
 require_once(__DIR__ . '/../../../tests/generator/lib.php');
 
 use tool_lifecycle\local\manager\process_manager;
@@ -37,6 +37,15 @@ use tool_lifecycle\task\lifecycle_task;
  */
 class admin_approve_test extends \advanced_testcase {
 
+    /**
+     * Starts a manual trigger and checks that one mail is send.
+     * @covers \tool_lifecycle\step\adminapprove
+     * @return void
+     * @throws coding_exception
+     * @throws dml_exception
+     * @throws dml_transaction_exception
+     * @throws moodle_exception
+     */
     public function test_admin_mail() {
         $this->resetAfterTest(true);
         $generator = $this->getDataGenerator()->get_plugin_generator('tool_lifecycle');
