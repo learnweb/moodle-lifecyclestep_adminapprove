@@ -49,7 +49,6 @@ class course_filter_form extends \moodleform {
         $mform->addElement('text', 'coursename', get_string('course'));
         $mform->setType('coursename', PARAM_NOTAGS);
 
-
         $categories = \core_course_category::get_all();
 
         $categoryoptions = ['' => '-'];
