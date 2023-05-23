@@ -31,11 +31,19 @@ defined('MOODLE_INTERNAL') || die();
 
 require_once(__DIR__ . '/../lib.php');
 
+/**
+ * Step to enable admins to approve processing steps.
+ */
 class adminapprove extends libbase {
 
+    /**
+     * How many courses are new.
+     * @var int
+     */
     private static $newcourses = 0;
 
     /**
+     * Provess a single course.
      * @param int $processid of the respective process.
      * @param int $instanceid of the step instance.
      * @param mixed $course to be processed.
@@ -51,16 +59,35 @@ class adminapprove extends libbase {
         return step_response::waiting();
     }
 
+    /**
+     * Rollback a course.
+     * @param $processid
+     * @param $instanceid
+     * @param $course
+     * @return void
+     * @throws \dml_exception
+     */
     public function rollback_course($processid, $instanceid, $course) {
         global $DB;
         $DB->delete_records('lifecyclestep_adminapprove', array('processid' => $processid));
-        return;
     }
 
+    /**
+     * Subpluginname.
+     * @return string
+     */
     public function get_subpluginname() {
         return 'adminapprove';
     }
 
+    /**
+     * Process a course which is waiting.
+     * @param $processid
+     * @param $instanceid
+     * @param $course
+     * @return step_response
+     * @throws \dml_exception
+     */
     public function process_waiting_course($processid, $instanceid, $course) {
         global $DB;
         $record = $DB->get_record('lifecyclestep_adminapprove', array('processid' => $processid));
@@ -76,10 +103,19 @@ class adminapprove extends libbase {
         }
     }
 
+    /**
+     * If multiple courses are processed, reset new courses.
+     * @return void
+     */
     public function pre_processing_bulk_operation() {
         self::$newcourses = 0;
     }
 
+    /**
+     * If there are new courses send a mail.
+     * @return void
+     * @throws \coding_exception
+     */
     public function post_processing_bulk_operation() {
         global $CFG;
         if (self::$newcourses > 0) {
@@ -94,12 +130,20 @@ class adminapprove extends libbase {
         }
     }
 
+    /**
+     * @return instance_setting[]
+     */
     public function instance_settings() {
         return array(
             new instance_setting('statusmessage', PARAM_TEXT),
         );
     }
 
+    /**
+     * @param $mform
+     * @return void
+     * @throws \coding_exception
+     */
     public function extend_add_instance_form_definition($mform) {
         $elementname = 'statusmessage';
         $mform->addElement('text', $elementname, get_string('statusmessage', 'lifecyclestep_adminapprove'));

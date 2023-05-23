@@ -29,8 +29,16 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 require_once($CFG->libdir . '/formslib.php');
 
+/**
+ * A Form to filter courses.
+ */
 class course_filter_form extends \moodleform {
 
+    /**
+     * All Elements of the form.
+     * @return void
+     * @throws \coding_exception
+     */
     protected function definition() {
         global $CFG;
         $mform = $this->_form;
@@ -41,13 +49,8 @@ class course_filter_form extends \moodleform {
         $mform->addElement('text', 'coursename', get_string('course'));
         $mform->setType('coursename', PARAM_NOTAGS);
 
-        // Use core_course_category for moodle 3.6 and higher.
-        if ($CFG->version >= 2018120300) {
-            $categories = \core_course_category::get_all();
-        } else {
-            require_once($CFG->libdir . '/coursecatlib.php');
-            $categories = \coursecat::get_all();
-        }
+
+        $categories = \core_course_category::get_all();
 
         $categoryoptions = ['' => '-'];
         foreach ($categories as $category) {

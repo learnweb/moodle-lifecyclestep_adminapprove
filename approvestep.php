@@ -43,6 +43,18 @@ if ($step->subpluginname !== 'adminapprove') {
     throw new moodle_exception('The given step is not a Admin Approve Step.');
 }
 
+/**
+ * Constant to roll back selected.
+ */
+/**
+ * Constant to roll back all courses.
+ */
+/**
+ * Constant to proceed selected.
+ */
+/**
+ * Constant to proceed all courses.
+ */
 const ROLLBACK = 'rollback', ROLLBACK_ALL = 'rollbackall', PROCEED = 'proceed', PROCEED_ALL = 'proceedall';
 
 $workflow = \tool_lifecycle\local\manager\workflow_manager::get_workflow($step->workflowid);

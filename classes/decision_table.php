@@ -29,12 +29,30 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 require_once($CFG->libdir . '/tablelib.php');
 
+/**
+ * Table to show to be processed courses.
+ */
 class decision_table extends \table_sql {
 
+    /**
+     * @var coursecategory
+     */
     private $category;
 
+    /**
+     * @var String pattern for the coursename.
+     */
     private $coursename;
 
+
+    /**
+     * Constructs the table.
+     * @param $stepid int
+     * @param $courseid int
+     * @param $category int
+     * @param $coursename string
+     * @throws \coding_exception
+     */
     public function __construct($stepid, $courseid, $category, $coursename) {
         parent::__construct('lifecyclestep_adminapprove-decisiontable');
         $this->category = $category;
@@ -73,14 +91,20 @@ class decision_table extends \table_sql {
             $params['cname'] = '%' . $DB->sql_like_escape($coursename) . '%';
         }
         $this->set_sql($fields, $from, $where, $params);
-
     }
 
+
+    /**
+     * Column of checkboxes.
+     * @param $row
+     * @return string
+     */
     public function col_checkbox($row) {
         return \html_writer::checkbox('c[]', $row->id, false);
     }
 
     /**
+     * Column for the course id.
      * Render courseid column.
      * @param $row
      * @return string course link
@@ -121,6 +145,12 @@ class decision_table extends \table_sql {
         }
     }
 
+    /**
+     * Show the availble tool/actions for a column.
+     * @param $row
+     * @return string
+     * @throws \coding_exception
+     */
     public function col_tools($row) {
         $output = \html_writer::start_div('singlebutton mr-1');
         $output .= \html_writer::tag('button', get_string('proceed', 'lifecyclestep_adminapprove'),
@@ -135,15 +165,15 @@ class decision_table extends \table_sql {
         return $output;
     }
 
+    /**
+     * Print statement if the table is empty.
+     * @return void
+     * @throws \coding_exception
+     */
     public function print_nothing_to_display() {
-        global $OUTPUT;
-
         // Render button to allow user to reset table preferences.
         echo $this->render_reset_button();
-
         $this->print_initials_bar();
-
         echo get_string('nothingtodisplay', 'lifecyclestep_adminapprove');
     }
-
 }

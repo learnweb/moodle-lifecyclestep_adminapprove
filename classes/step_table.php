@@ -29,8 +29,15 @@ defined('MOODLE_INTERNAL') || die();
 global $CFG;
 require_once($CFG->libdir . '/tablelib.php');
 
+/**
+ * Show the steps available.
+ */
 class step_table extends \table_sql {
 
+    /**
+     * Construct the table.
+     * @throws \coding_exception
+     */
     public function __construct() {
         parent::__construct('lifecyclestep_adminapprove-steptable');
         $this->define_baseurl("/admin/tool/lifecycle/step/adminapprove/index.php");
@@ -52,19 +59,25 @@ class step_table extends \table_sql {
         $this->set_sql($fields, $from, 'TRUE');
     }
 
+    /**
+     * Show the stepname.
+     * @param $row
+     * @return string
+     */
     public function col_stepname($row) {
         return '<div data-stepid="' . $row->id . '" hidden></div> <a href="approvestep.php?stepid='. $row->id .'">'
                 . $row->stepname . '</a>';
     }
 
+    /**
+     * Print information if table does not have content.
+     * @return void
+     * @throws \coding_exception
+     */
     public function print_nothing_to_display() {
-        global $OUTPUT;
-
         // Render button to allow user to reset table preferences.
         echo $this->render_reset_button();
-
         $this->print_initials_bar();
-
         echo get_string('nostepstodisplay', 'lifecyclestep_adminapprove');
     }
 

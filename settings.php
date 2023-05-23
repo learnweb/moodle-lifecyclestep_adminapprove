@@ -17,7 +17,7 @@
 /**
  * Settings page which gives an overview over running lifecycle processes.
  *
- * @package tool_lifecycle
+ * @package lifecyclestep_adminapprove
  * @copyright  2019 Justus Dieckmann WWU
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */

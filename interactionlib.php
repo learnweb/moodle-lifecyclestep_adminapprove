@@ -36,7 +36,13 @@ defined('MOODLE_INTERNAL') || die();
 require_once(__DIR__ . '/../interactionlib.php');
 require_once(__DIR__ . '/lib.php');
 
-
+/**
+ * Adminapprove interactionlib
+ *
+ * @package    lifecyclestep_adminapprove
+ * @copyright  2019 Tobias Reischmann WWU
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class interactionadminapprove extends interactionlibbase {
 
 
