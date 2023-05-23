@@ -61,7 +61,7 @@ class step_table extends \table_sql {
 
     /**
      * Show the stepname.
-     * @param $row
+     * @param object $row
      * @return string
      */
     public function col_stepname($row) {

@@ -24,6 +24,7 @@
 
 namespace tool_lifecycle\step;
 
+use stdClass;
 use tool_lifecycle\local\entity\process;
 use tool_lifecycle\local\response\step_response;
 
@@ -61,9 +62,9 @@ class adminapprove extends libbase {
 
     /**
      * Rollback a course.
-     * @param $processid
-     * @param $instanceid
-     * @param $course
+     * @param int $processid
+     * @param int $instanceid
+     * @param stdClass $course
      * @return void
      * @throws \dml_exception
      */
@@ -82,9 +83,9 @@ class adminapprove extends libbase {
 
     /**
      * Process a course which is waiting.
-     * @param $processid
-     * @param $instanceid
-     * @param $course
+     * @param int $processid
+     * @param int $instanceid
+     * @param stdClass $course
      * @return step_response
      * @throws \dml_exception
      */
@@ -131,6 +132,7 @@ class adminapprove extends libbase {
     }
 
     /**
+     * Setting for the adminapprove step.
      * @return instance_setting[]
      */
     public function instance_settings() {
@@ -140,7 +142,8 @@ class adminapprove extends libbase {
     }
 
     /**
-     * @param $mform
+     * Creates form elements for creating a step instance.
+     * @param \MoodleQuickForm $mform
      * @return void
      * @throws \coding_exception
      */
