@@ -47,10 +47,10 @@ class decision_table extends \table_sql {
 
     /**
      * Constructs the table.
-     * @param $stepid int
-     * @param $courseid int
-     * @param $category int
-     * @param $coursename string
+     * @param int $stepid
+     * @param int $courseid
+     * @param int $category
+     * @param String $coursename
      * @throws \coding_exception
      */
     public function __construct($stepid, $courseid, $category, $coursename) {
@@ -96,7 +96,7 @@ class decision_table extends \table_sql {
 
     /**
      * Column of checkboxes.
-     * @param $row
+     * @param object $row
      * @return string
      */
     public function col_checkbox($row) {
@@ -106,7 +106,7 @@ class decision_table extends \table_sql {
     /**
      * Column for the course id.
      * Render courseid column.
-     * @param $row
+     * @param object $row
      * @return string course link
      */
     public function col_courseid($row) {
@@ -115,7 +115,7 @@ class decision_table extends \table_sql {
 
     /**
      * Render coursefullname column.
-     * @param $row
+     * @param object $row
      * @return string course link
      */
     public function col_course($row) {
@@ -124,7 +124,7 @@ class decision_table extends \table_sql {
 
     /**
      * Render coursecategory column.
-     * @param $row
+     * @param object $row
      * @return string course category
      */
     public function col_category($row) {
@@ -133,7 +133,7 @@ class decision_table extends \table_sql {
 
     /**
      * Render startdate column.
-     * @param $row
+     * @param object $row
      * @return string human readable date
      */
     public function col_startdate($row) {
@@ -147,7 +147,7 @@ class decision_table extends \table_sql {
 
     /**
      * Show the availble tool/actions for a column.
-     * @param $row
+     * @param object $row
      * @return string
      * @throws \coding_exception
      */
