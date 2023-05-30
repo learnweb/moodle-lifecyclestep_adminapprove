@@ -118,16 +118,30 @@ class adminapprove extends libbase {
      * @throws \coding_exception
      */
     public function post_processing_bulk_operation() {
-        global $CFG;
+        global $CFG, $DB;
         if (self::$newcourses > 0) {
             $obj = new \stdClass();
             $obj->amount = self::$newcourses;
             $obj->url = $CFG->wwwroot . '/admin/tool/lifecycle/step/adminapprove/index.php';
 
-            email_to_user(get_admin(), \core_user::get_noreply_user(),
-                get_string('emailsubject', 'lifecyclestep_adminapprove'),
-                get_string('emailcontent', 'lifecyclestep_adminapprove',  $obj),
-                get_string('emailcontenthtml', 'lifecyclestep_adminapprove', $obj));
+            $mailusers = [get_admin()];
+            if ($configmailusers = get_config('lifecyclestep_adminapprove', 'mailusers')) {
+                $mailusers = [];
+                $userids = preg_split("/[\s,;]/", $configmailusers);
+                foreach ($userids as $userid) {
+                    $user = $DB->get_record('user', ['id' => $userid]);
+                    if ($user) {
+                        $mailusers[] = $user;
+                    }
+                }
+            }
+
+            foreach ($mailusers as $mailuser) {
+                email_to_user($mailuser, \core_user::get_noreply_user(),
+                    get_string('emailsubject', 'lifecyclestep_adminapprove'),
+                    get_string('emailcontent', 'lifecyclestep_adminapprove',  $obj),
+                    get_string('emailcontenthtml', 'lifecyclestep_adminapprove', $obj));
+            }
         }
     }
 

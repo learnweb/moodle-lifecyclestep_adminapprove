@@ -47,3 +47,7 @@ $string['proceedall'] = 'Proceed all';
 $string['rollbackall'] = 'Rollback all';
 $string['statusmessage'] = 'Status message';
 $string['statusmessage_help'] = 'Status message, which is displayed to a teacher, if a process of a course is at this admin approve step.';
+
+$string['settings:general'] = 'General settings';
+$string['setting:mailusers'] = 'User IDs to send notifications to upon new courses';
+$string['setting:mailusers:desc'] = 'IDs should be seperated by spaces or semicolons. If left empty, mails will be sent to the admin instead.';
