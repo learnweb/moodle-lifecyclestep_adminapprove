@@ -50,4 +50,4 @@ $string['statusmessage_help'] = 'Status message, which is displayed to a teacher
 
 $string['settings:general'] = 'General settings';
 $string['setting:mailusers'] = 'User IDs to send notifications to upon new courses';
-$string['setting:mailusers:desc'] = 'IDs should be seperated by spaces or semicolons. If left empty, mails will be sent to the admin instead.';
+$string['setting:mailusers:desc'] = 'IDs should be seperated by spaces or semicolons. If left empty, mails will be sent to the admins instead.';

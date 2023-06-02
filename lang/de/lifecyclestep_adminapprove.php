@@ -50,4 +50,4 @@ $string['statusmessage_help'] = 'Statusnachricht, welche dem Lehrer angezeigt wi
 
 $string['settings:general'] = 'Allgemeine Einstellungen';
 $string['setting:mailusers'] = 'IDs von Nutzern, welche bei neuen Kursen benachrichtigt werden';
-$string['setting:mailusers:desc'] = 'IDs müssen durch Leerzeichen oder Semikola getrennt werden. Wenn das Feld leer gelassen wird, werden stattdessen Mails an den Admin geschickt.';
+$string['setting:mailusers:desc'] = 'IDs müssen durch Leerzeichen oder Semikola getrennt werden. Wenn das Feld leer gelassen wird, werden stattdessen Mails an alle Admins geschickt.';

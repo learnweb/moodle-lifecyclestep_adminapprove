@@ -124,11 +124,15 @@ class adminapprove extends libbase {
             $obj->amount = self::$newcourses;
             $obj->url = $CFG->wwwroot . '/admin/tool/lifecycle/step/adminapprove/index.php';
 
-            $mailusers = [get_admin()];
+            $mailusers = get_admins();
             if ($configmailusers = get_config('lifecyclestep_adminapprove', 'mailusers')) {
                 $mailusers = [];
                 $userids = preg_split("/[\s,;]/", $configmailusers);
                 foreach ($userids as $userid) {
+                    $userid = (int) $userid;
+                    if (!$userid) {
+                        continue;
+                    }
                     $user = $DB->get_record('user', ['id' => $userid]);
                     if ($user) {
                         $mailusers[] = $user;
