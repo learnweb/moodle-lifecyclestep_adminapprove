@@ -47,3 +47,7 @@ $string['proceedall'] = 'Alle fortführen';
 $string['rollbackall'] = 'Alle zurücksetzten';
 $string['statusmessage'] = 'Statusnachricht';
 $string['statusmessage_help'] = 'Statusnachricht, welche dem Lehrer angezeigt wird, wenn ein Prozess eines Kurses den Adminbestätigungs-Schritt bearbeitet.';
+
+$string['settings:general'] = 'Allgemeine Einstellungen';
+$string['setting:mailusers'] = 'IDs von Nutzern, welche bei neuen Kursen benachrichtigt werden';
+$string['setting:mailusers:desc'] = 'IDs müssen durch Leerzeichen oder Semikola getrennt werden. Wenn das Feld leer gelassen wird, werden stattdessen Mails an alle Admins geschickt.';

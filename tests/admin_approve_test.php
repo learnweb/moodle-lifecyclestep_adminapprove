@@ -76,4 +76,37 @@ class admin_approve_test extends \advanced_testcase {
         $this->assertCount(1, $sink->get_messages());
         $sink->close();
     }
+
+    public function test_alternative_mail() {
+        $this->resetAfterTest();
+        $generator = $this->getDataGenerator()->get_plugin_generator('tool_lifecycle');
+        $workflow = $generator->create_workflow([], []);
+        $user1 = $this->getDataGenerator()->create_user();
+        $user2 = $this->getDataGenerator()->create_user();
+        $trigger = $generator->create_trigger('manual', 'manual', $workflow->id);
+        $generator->create_step('adminapprove', 'adminapprove', $workflow->id);
+        set_config('mailusers', "$user1->id; $user2->id", 'lifecyclestep_adminapprove');
+        workflow_manager::activate_workflow($workflow->id);
+
+        // Create 4 courses.
+        $course1 = $this->getDataGenerator()->create_course();
+        $course2 = $this->getDataGenerator()->create_course();
+
+        process_manager::manually_trigger_process($course1->id, $trigger->id);
+        process_manager::manually_trigger_process($course2->id, $trigger->id);
+
+        // Prevent output from the task execution.
+        $this->setOutputCallback(function() {
+        });
+
+        // Create an email sink to query it after the processing.
+        $sink = $this->redirectEmails();
+        $task = new lifecycle_task();
+        $task->execute();
+        $messages = $sink->get_messages();
+        $this->assertCount(2, $messages);
+        $this->assertStringContainsString($user1->email, $messages[0]->to);
+        $this->assertStringContainsString($user2->email, $messages[1]->to);
+        $sink->close();
+    }
 }
